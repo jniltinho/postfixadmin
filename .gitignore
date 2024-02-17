@@ -7,6 +7,10 @@
 *.dll
 *.so
 *.dylib
+*_templ.go
+bin
+tmp
+postfixadmin
 
 # Test binary, built with `go test -c`
 *.test

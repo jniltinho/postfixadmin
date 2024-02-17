@@ -1,0 +1,116 @@
+package view
+
+templ Home() {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="utf-8"/>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+			<title>Go Postfix Admin</title>
+			<link rel="shortcut icon" href="/static/images/favicon.ico"/>
+			<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>
+			<script src="/static/js/jquery-3.7.0.min.js"></script>
+			<script src="/static/css/bootstrap-3.4.1-dist/js/moment-with-locales.min.js"></script>
+			<script src="/static/css/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+			<script src="/static/css/bootstrap-3.4.1-dist/js/bootstrap-datetimepicker.min.js"></script>
+		</head>
+		<body class="lang-en page-main ">
+			<!-- menu.tpl -->
+			<nav class="navbar navbar-default fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="/home"><img id="login_header_logo" src="/static/images/postbox.png" alt="Logo"/></a></div>
+					<div id="navbar" class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="/list/table=admin">Admin List <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="/list/table=admin">Admin List</a></li><li><a href="/edit/table=admin">New Admin</a></li></ul></li>
+							<li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="/list/table=domain">Domain List <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="/list/table=domain">Domain List</a></li><li><a href="/edit/table=domain">New Domain</a></li></ul></li>
+							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="/list-virtual">Virtual List <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="/list-virtual">Virtual List</a></li><li><a href="/edit/table=mailbox">Add Mailbox</a></li><li><a href="/edit/table=alias">Add Alias</a></li><li><a href="/edit/table=aliasdomain">Add Alias Domain</a></li></ul></li>
+							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="/list/table=fetchmail">Fetch Email <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="/list/table=fetchmail">Fetch Email</a></li><li><a href="/edit/table=fetchmail">New entry</a></li></ul></li>
+							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="/sendmail">Send Email <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="/sendmail">Send Email</a></li><li><a href="/broadcast-message">Broadcast message</a></li></ul></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a
+									class="btn btn-default btn-sm"
+									type="button"
+									href="/edit/table=adminpassword"
+								>Password</a>
+							</li>
+							<li>
+								<a
+									class="btn btn-default btn-sm"
+									type="button"
+									href="/viewlog"
+								>View Log</a>
+							</li>
+							<li><a class="btn btn-default btn-sm" type="button" href="/setup">Setup / Diagnostics</a></li>
+							<li>
+								<a
+									class="btn btn-default btn-sm"
+									type="button"
+									href="/login"
+								>Logout</a>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</nav>
+			<div class="container" style="min-width: 600px; width: min-content" role="main">
+				<!-- flash_error.tpl -->
+				<br clear="all"/>
+				<br/>
+				<!-- main.tpl -->
+				<div class="panel panel-default" id="main_menu">
+					<table class="table">
+						<tr>
+							<td nowrap="nowrap"><a class="btn btn-primary" href="/list/table=domain">Overview</a></td>
+							<td>List your aliases and mailboxes. You can edit / delete them from here.</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap"><a class="btn btn-primary" href="/edit/table=alias">Add Alias</a></td>
+							<td>Create a new alias for your domain.</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap"><a class="btn btn-primary" href="/edit/table=mailbox">Add Mailbox</a></td>
+							<td>Create a new mailbox for your domain.</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap"><a class="btn btn-primary" href="/sendmail">Send Email</a></td>
+							<td>Send an email to one of your newly created mailboxes.</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap"><a class="btn btn-primary" href="/edit/table=adminpassword">Password</a></td>
+							<td>Change the password for your admin account.</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap"><a class="btn btn-primary" href="/viewlog">View Log</a></td>
+							<td>View the log files.</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap"><a class="btn btn-primary" href="/login">Logout</a></td>
+							<td>Logout from the system</td>
+						</tr>
+					</table>
+				</div>
+			</div><!-- footer.tpl -->
+			<footer class="footer">
+				<div class="container text-center">
+					<a target="_blank" rel="noopener" href="https://github.com/postfixadmin/postfixadmin/">Postfix Admin 0.0.1</a>
+					<span id="update-check">
+						&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+						<a
+							target="_blank"
+							rel="noopener"
+							href="#"
+						>Check for update</a>
+					</span>
+					&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					Logged in as jniltinho@gmail.com
+					&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<a href="http://change-this-to-your.domain.tld" rel="noopener">Return to change-this-to-your.domain.tld</a>
+				</div>
+			</footer>
+		</body>
+	</html>
+}

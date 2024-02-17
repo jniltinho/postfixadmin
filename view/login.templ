@@ -1,0 +1,71 @@
+package view
+
+templ Login() {
+	<!DOCTYPE html>
+	<html lang="">
+		<head>
+			<meta charset="utf-8"/>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+			<title>Go Postfix Admin</title>
+			<link rel="shortcut icon" href="/static/images/favicon.ico"/>
+			<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>
+			<script src="/static/js/jquery-3.7.0.min.js"></script>
+			<script src="/static/css/bootstrap-3.4.1-dist/js/moment-with-locales.min.js"></script>
+			<script src="/static/css/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+			<script src="/static/css/bootstrap-3.4.1-dist/js/bootstrap-datetimepicker.min.js"></script>
+		</head>
+		<body class="lang-en page-login">
+			<div class="container" style="min-width: 600px; width: min-content" role="main">
+				<!-- flash_error.tpl -->
+				<br clear="all"/>
+				<br/>
+				<nav class="navbar navbar-default navbar-fixed-top">
+					<div class="container">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="/home"><img id="login_header_logo" src="/static/images/logo-default.png" alt="Logo"/></a>
+						</div>
+					</div>
+				</nav>
+				<div id="login" class="container">
+					<h2 class="h2">Mail admins login here to administer your domain.</h2>
+					<div class="well">
+						<form name="frmLogin" method="post" action="" role="form" class="form-signin">
+							<input type="hidden" name="token" value="6f17709a20f3d6d1377ca76dad118ac3"/>
+							<div class="form-group">
+								<label for="fUsername">Login (email):</label>
+								<input class="form-control" type="text" name="fUsername" id="fUsername"/>
+							</div>
+							<div class="form-group">
+								<label for="fPassword">Password:</label>
+								<input class="form-control" type="password" name="fPassword" id="fPassword"/>
+							</div>
+							<div class="text-center">
+								<button class="btn btn-primary btn-lg" type="submit" name="submit" value="Login">Login</button>
+							</div>
+						</form>
+					</div>
+					<script type="text/javascript">
+        document.frmLogin.fUsername.focus();
+    </script>
+				</div>
+			</div><!-- footer.tpl -->
+			<footer class="footer">
+				<div class="container text-center">
+					<a target="_blank" rel="noopener" href="https://github.com/jniltinho/postfixadmin/">Postfix Admin 0.0.1</a>
+					<span id="update-check">
+						&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+						<a
+							target="_blank"
+							rel="noopener"
+							href="#"
+						>Check for update</a>
+					</span>
+					&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<a href="http://change-this-to-your.domain.tld" rel="noopener">Return to change-this-to-your.domain.tld</a>
+				</div>
+			</footer>
+		</body>
+	</html>
+}
