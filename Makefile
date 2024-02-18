@@ -1,6 +1,6 @@
 GOCMD ?= go
 GOBUILD = $(GOCMD) build
-GOCLEAN = $(GOCMD) clean
+GOCLEAN = $(GOCMD) clean -cache
 GOGET = $(GOCMD) get
 BINARY_NAME = postfixadmin
 
@@ -20,6 +20,7 @@ format:
 
 build:
 	CGO_ENABLED=0 $(GOBUILD) -o $(BINARY_NAME) -v -ldflags="-s -w"
+	upx $(BINARY_NAME)
 
 
 clean:
@@ -28,4 +29,4 @@ clean:
 
 
 run:
-	./$(BINARY_NAME)
+	./$(BINARY_NAME) server --config=local.toml

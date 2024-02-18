@@ -1,32 +1,19 @@
 package config
 
 import (
-	"flag"
 	"fmt"
-	"os"
 
 	"github.com/spf13/viper"
 )
 
-func NewConfig() *viper.Viper {
-	envConf := os.Getenv("APP_CONF")
-	if envConf == "" {
-		flag.StringVar(&envConf, "conf", "local.toml", "config path, eg: -conf local.toml")
-		flag.Parse()
-	}
-	if envConf == "" {
-		envConf = "local.toml"
-	}
-	fmt.Println("load conf file:", envConf)
-	return getConfig(envConf)
+func GetMysqlDSN(conf *viper.Viper) string {
 
-}
-func getConfig(path string) *viper.Viper {
-	conf := viper.New()
-	conf.SetConfigFile(path)
-	err := conf.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
-	return conf
+	dbUser := conf.GetString("mysql.user")
+	dbPassword := conf.GetString("mysql.password")
+	dbHost := conf.GetString("mysql.host")
+	dbName := conf.GetString("mysql.dbname")
+
+	DSN := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&timeout=10s&parseTime=True", dbUser, dbPassword, dbHost, dbName)
+
+	return DSN
 }

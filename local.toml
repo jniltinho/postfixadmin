@@ -1,7 +1,7 @@
 env = "local"
 
 [http]
-port = 8008
+host = "0.0.0.0:8008"
 
 [security.api_sign]
 app_key = 123456
@@ -10,13 +10,18 @@ app_security = 123456
 [security.jwt]
 key = 1234
 
-[data.mysql]
-user = "postfixadmin:123456@tcp(127.0.0.1:3306)/user?charset=utf8mb4&parseTime=True&loc=Local"
+[mysql]
+user = "postfixadmin"
+password = "postfixadminPassword"
+host = "172.21.0.2:3306"
+dbname = "postfixadmin"
+max_idle_conns = 2
+max_open_conns = 16
 
-[data.redis]
-addr = "127.0.0.1:6350"
+[redis]
+host = "127.0.0.1:6350"
 password = ""
-db = 0
+dbname = 0
 read_timeout = "0.2s"
 write_timeout = "0.2s"
 
