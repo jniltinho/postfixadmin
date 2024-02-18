@@ -1,13 +1,14 @@
 package log
 
 import (
-	"github.com/gin-gonic/gin"
+	"os"
+	"time"
+
+	"github.com/labstack/echo/v4"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"os"
-	"time"
 )
 
 const LOGGER_KEY = "zapLogger"
@@ -97,16 +98,16 @@ func timeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 }
 
 // NewContext 给指定的context添加字段
-func (l *Logger) NewContext(ctx *gin.Context, fields ...zapcore.Field) {
+func (l *Logger) NewContext(ctx echo.Context, fields ...zapcore.Field) {
 	ctx.Set(LOGGER_KEY, l.WithContext(ctx).With(fields...))
 }
 
 // WithContext 从指定的context返回一个zap实例
-func (l *Logger) WithContext(ctx *gin.Context) *Logger {
+func (l *Logger) WithContext(ctx echo.Context) *Logger {
 	if ctx == nil {
 		return l
 	}
-	zl, _ := ctx.Get(LOGGER_KEY)
+	zl := ctx.Get(LOGGER_KEY)
 	ctxLogger, ok := zl.(*zap.Logger)
 	if ok {
 		return &Logger{ctxLogger}
