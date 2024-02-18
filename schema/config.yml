@@ -1,0 +1,47 @@
+base:
+    is_dev : false
+out_dir : ./model  # out dir
+url_tag : json # web url tag(json,db(https://github.com/google/go-querystring))
+language : English # language(English,中 文)
+db_tag : gorm
+simple : true
+user_gorm_model : false
+is_db_tag : true
+is_out_sql : false
+is_out_func : false
+is_web_tag : true
+is_web_tag_pk_hidden: true # web标记是否隐藏主键
+is_foreign_key : true # 是否导出外键关联
+is_gui : false # 是否ui模式显示
+is_table_name : true # 是否直接生成表名
+is_column_name : false
+is_null_to_point : false # database is 'DEFAULT NULL' then set element type as point
+is_null_to_sql_null: false # 数据库默认 'DEFAULT NULL' 时设置结构为sql.NULL  is_null_to_point如果为true，则is_null_to_sql_null不生效
+table_prefix : "" #table prefix
+table_names: "" # Specified table generation, multiple tables with , separated
+is_out_file_by_table_name: true
+is_out_page: true
+
+db_info:
+    host : 172.21.0.2
+    port : 3306
+    username : postfixadmin
+    password : postfixadminPassword
+    database : postfixadmin
+    type: 0 # 0:mysql , 1:sqlite , 2:mssql
+self_type_define:
+    datetime: time.Time
+    time: time.Time
+    ^(int)[(]\d+[)]: int
+out_file_name: "" # Custom build file name
+web_tag_type: 0 # json tag 0: Small Camel-Case 1:
+
+
+## Install gormt
+## https://github.com/xxjwxc/gormt
+## gormt config.yml
+## mv model/* ../model/
+
+## Our install gen
+## https://github.com/smallnest/gen
+## gen --sqltype=mysql -c "postfixadmin:postfixadminPassword@tcp(172.21.0.2:3306)/postfixadmin" -d postfixadmin --json --gorm

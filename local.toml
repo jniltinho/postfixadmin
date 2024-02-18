@@ -1,0 +1,28 @@
+env = "local"
+
+[http]
+port = 8008
+
+[security.api_sign]
+app_key = 123456
+app_security = 123456
+
+[security.jwt]
+key = 1234
+
+[data.mysql]
+user = "postfixadmin:123456@tcp(127.0.0.1:3306)/user?charset=utf8mb4&parseTime=True&loc=Local"
+
+[data.redis]
+addr = "127.0.0.1:6350"
+password = ""
+db = 0
+read_timeout = "0.2s"
+write_timeout = "0.2s"
+
+[log]
+log_level = "info"
+encoding = "json" #(console|json)
+log_file_name = "./tmp/server.log"
+max_backups = 30
+compress = true
