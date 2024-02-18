@@ -37,6 +37,9 @@ out_file_name: "" # Custom build file name
 web_tag_type: 0 # json tag 0: Small Camel-Case 1:
 
 
+## Export Mysqdump
+## mysqldump -upostfixadmin -ppostfixadminPassword --no-data --skip-quote-names postfixadmin|sed -E '/(DROP|LOCK|--|!40)/d' > postfixadmin.sql
+
 ## Install gormt
 ## https://github.com/xxjwxc/gormt
 ## gormt config.yml

@@ -13,15 +13,20 @@ import (
 	"go.uber.org/zap"
 )
 
+//go:embed schema/postfixadmin.sql
+var schema []byte
+
 //go:embed static/*
 var content embed.FS
-
 var staticFS = echo.WrapHandler(http.FileServer(http.FS(content)))
 
 func main() {
 
 	conf := config.NewConfig()
 	logger := log.NewLog(conf)
+
+	// Schema PostfixAdmin Print
+	//handlers.SchemaHandler(schema)
 
 	// Echo instance
 	app := echo.New()
