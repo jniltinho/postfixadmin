@@ -18,11 +18,12 @@ This project is currently not working, it is just the skeleton of the beginning 
 ## Requirements to Devel/Build
 
 ```bash
-## git, golang 1.22, templ, air, upx, goreleaser
-## https://github.com/upx/upx/releases
-## https://github.com/goreleaser/goreleaser/releases
+## git, golang 1.22, cobra-cli, templ, air, upx, goreleaser
+go install github.com/spf13/cobra-cli@latest
 go install github.com/a-h/templ/cmd/templ@latest
 go install github.com/cosmtrek/air@latest
+## https://github.com/goreleaser/goreleaser/releases
+## https://github.com/upx/upx/releases
 ```
 
 
