@@ -3,7 +3,7 @@
 [![Release](https://github.com/jniltinho/postfixadmin/workflows/Release/badge.svg)](https://github.com/jniltinho/postfixadmin/actions?query=workflow%3ARelease)
 
 
-## Requirements
+## Requirements to Devel/Build
 
 ```bash
 ## git, golang 1.22, templ, air, upx
@@ -22,4 +22,10 @@ make
 make run or ./postfixadmin serve
 ```
 
+## Generate Config file
 
+```bash
+## Generate file prod_config.toml
+./postfixadmin init
+./postfixadmin serve --config=prod_config.toml
+```
