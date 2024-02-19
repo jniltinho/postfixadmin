@@ -21,9 +21,3 @@ jobs:
         with:
           version: latest
           args: release --clean
-      - name: Docker release
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: jniltinho/postfixadmin
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
