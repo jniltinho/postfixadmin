@@ -1,5 +1,8 @@
 # PostfixAdmin Fork Refacture in Golang
 
+[![Test](https://github.com/jniltinho/postfixadmin/workflows/Test/badge.svg)](https://github.com/jniltinho/postfixadmin/actions?query=workflow%3ATest)
+[![Release](https://github.com/jniltinho/postfixadmin/workflows/Release/badge.svg)](https://github.com/jniltinho/postfixadmin/actions?query=workflow%3ARelease)
+
 
 ## Requirements
 
