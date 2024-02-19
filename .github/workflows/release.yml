@@ -9,11 +9,14 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Set up Go
-        uses: actions/setup-go@v2
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v2
-      - name: Get dependencies
-        run: go get
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.22.0'
+      - run: go install github.com/a-h/templ/cmd/templ@latest
+      - run: templ generate
+      - run: go get
+      - run: go mod tidy
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
