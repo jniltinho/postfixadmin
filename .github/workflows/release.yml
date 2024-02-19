@@ -8,7 +8,6 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Set up Go
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
