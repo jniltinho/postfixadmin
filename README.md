@@ -8,12 +8,13 @@ This project is currently not working, it is just the skeleton of the beginning 
 ## This project uses the tools below.
 
 - [Echo](https://echo.labstack.com/)
-- Templ
-- Gorm
-- Cobra
-- Viper
-- Zap Log
-- Mysql
+- [Templ](https://templ.guide/)
+- [Gorm](https://gorm.io/)
+- [Cobra](https://cobra.dev/)
+- [Viper](https://github.com/spf13/viper)
+- [Zap](https://github.com/uber-go/zap)
+- [PostfixAdmin](https://github.com/postfixadmin/postfixadmin)
+- [Mysql 5.7](https://hub.docker.com/_/mysql)
 
 ## Requirements to Devel/Build
 
