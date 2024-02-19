@@ -48,3 +48,8 @@ web_tag_type: 0 # json tag 0: Small Camel-Case 1:
 ## Our install gen
 ## https://github.com/smallnest/gen
 ## gen --sqltype=mysql -c "postfixadmin:postfixadminPassword@tcp(172.21.0.2:3306)/postfixadmin" -d postfixadmin --json --gorm
+
+
+## Create SSL Cert
+## openssl req -newkey rsa:4096 -x509 -sha256 -days 3650 -nodes -out ./ssl/server.crt -keyout ./ssl/server.key
+

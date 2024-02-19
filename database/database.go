@@ -2,6 +2,7 @@ package database
 
 import (
 	"sync"
+	"time"
 
 	"github.com/jniltinho/postfixadmin/config"
 	"github.com/jniltinho/postfixadmin/log"
@@ -49,6 +50,7 @@ func dbInit(conf *viper.Viper, zlog *log.Logger) any {
 	stdDB, _ := db.DB()
 	stdDB.SetMaxIdleConns(maxIdleConns)
 	stdDB.SetMaxOpenConns(maxOpenConns)
+	stdDB.SetConnMaxLifetime(time.Hour)
 
 	return db
 }

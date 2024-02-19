@@ -2,6 +2,9 @@ env = "local"
 
 [http]
 host = "0.0.0.0:8008"
+ssl  = false
+cert = "ssl/server.crt"
+key  = "ssl/server.key"
 
 [security.api_sign]
 app_key = 123456

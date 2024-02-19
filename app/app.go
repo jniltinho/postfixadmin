@@ -42,7 +42,13 @@ func AppRun(conf *viper.Viper) {
 
 	// Start server
 	host := conf.GetString("http.host")
-	app.Logger.Fatal(app.Start(host))
+	//app.Logger.Fatal(app.Start(host))
+
+	if conf.GetBool("http.ssl") {
+		app.Logger.Fatal(app.StartTLS(host, conf.GetString("http.cert"), conf.GetString("http.key")))
+	} else {
+		app.Logger.Fatal(app.Start(host))
+	}
 }
 
 func InitConfigFile() {
