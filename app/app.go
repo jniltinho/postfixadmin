@@ -3,6 +3,7 @@ package app
 import (
 	"embed"
 	"net/http"
+	"os"
 
 	"github.com/jniltinho/postfixadmin/database"
 	"github.com/jniltinho/postfixadmin/handlers"
@@ -12,6 +13,9 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
+
+//go:embed scripts/local.toml
+var configFile []byte
 
 //go:embed static/*
 var content embed.FS
@@ -39,4 +43,15 @@ func AppRun(conf *viper.Viper) {
 	// Start server
 	host := conf.GetString("http.host")
 	app.Logger.Fatal(app.Start(host))
+}
+
+func InitConfigFile() {
+
+	err := os.WriteFile("prod_config.toml", configFile, 0644)
+	if err == nil {
+		println("Config file created " + "prod_config.toml")
+	} else {
+		println("Error creating config file " + err.Error())
+
+	}
 }

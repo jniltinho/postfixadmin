@@ -16,9 +16,9 @@ var serveCmd = &cobra.Command{
 	Long:  `Run Server with the configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		//fmt.Println("serve called")
-
 		//configFile, _ := rootCmd.Flags().GetString("config")
 		//println("Config file:", configFile)
+
 		app.AppRun(viper.GetViper())
 	},
 }
