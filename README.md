@@ -7,7 +7,7 @@ This project is currently not working, it is just the skeleton of the beginning 
 
 ## This project uses the tools below.
 
-- Echo
+- [Echo](https://echo.labstack.com/)
 - Templ
 - Gorm
 - Cobra
