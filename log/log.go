@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -113,4 +114,24 @@ func (l *Logger) WithContext(ctx echo.Context) *Logger {
 		return &Logger{ctxLogger}
 	}
 	return l
+}
+
+func (l *Logger) EchoLog() middleware.RequestLoggerConfig {
+
+	return middleware.RequestLoggerConfig{
+		LogURI:    true,
+		LogStatus: true,
+		LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
+			l.Info("request", zap.String("remote_ip", c.RealIP()),
+				zap.String("host", c.Request().Host),
+				zap.String("method", c.Request().Method),
+				zap.String("uri", v.URI),
+				zap.String("user_agent", c.Request().UserAgent()),
+				zap.Int("status", v.Status),
+				zap.Int64("bytes_in", c.Request().ContentLength),
+				zap.Int64("bytes_out", c.Response().Size),
+			)
+			return nil
+		},
+	}
 }

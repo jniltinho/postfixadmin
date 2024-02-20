@@ -29,10 +29,13 @@ func AppRun(conf *viper.Viper) {
 	// Echo instance
 	app := echo.New()
 
-	// Middleware
-	app.Use(middleware.Logger())
-	app.Use(middleware.Recover())
+	if conf.GetBool("ZAP_LOG") {
+		app.Use(middleware.RequestLoggerWithConfig(logger.EchoLog()))
+	} else {
+		app.Use(middleware.Logger())
+	}
 
+	app.Use(middleware.Recover())
 	app.GET("/static/*", staticFS)
 
 	// Routes
@@ -52,12 +55,10 @@ func AppRun(conf *viper.Viper) {
 }
 
 func InitConfigFile() {
-
 	err := os.WriteFile("prod_config.toml", configFile, 0644)
 	if err == nil {
 		println("Config file created " + "prod_config.toml")
 	} else {
 		println("Error creating config file " + err.Error())
-
 	}
 }
