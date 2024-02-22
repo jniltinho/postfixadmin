@@ -28,6 +28,7 @@ func AppRun(conf *viper.Viper) {
 		app.Use(middleware.Logger())
 	}
 
+	app.Use(handlers.WithAuth)
 	app.Use(middleware.Recover())
 	app.GET("/static/*", staticFS)
 

@@ -29,4 +29,4 @@ clean:
 
 
 run:
-	./$(BINARY_NAME) server --config=local.toml
+	./$(BINARY_NAME) serve --config=local.toml
