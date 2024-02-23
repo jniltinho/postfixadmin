@@ -8,27 +8,29 @@ import (
 	"github.com/jniltinho/postfixadmin/log"
 	"github.com/spf13/viper"
 
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
-var staticFS = echo.WrapHandler(http.FileServer(http.FS(content)))
+var staticFS = echo.WrapHandler(http.FileServer(http.FS(FS)))
 
 func AppRun(conf *viper.Viper) {
 	// Logger
 	logger := log.NewLog(conf)
 
+	secret := conf.GetString("security.jwt.key")
+
 	database.ConnectDb(conf, logger)
 	// Echo instance
 	app := echo.New()
+	app.Use(session.Middleware(sessions.NewCookieStore([]byte(secret))))
 
-	if conf.GetBool("ZAP_LOG") {
-		app.Use(middleware.RequestLoggerWithConfig(logger.EchoLog()))
-	} else {
-		app.Use(middleware.Logger())
-	}
-
-	app.Use(handlers.WithAuth)
+	app.Use(middleware.Logger())
+	app.Use(middleware.Recover())
+	//app.Use(handlers.WithAuth)
+	app.Use(handlers.CheckSession)
 	app.Use(middleware.Recover())
 	app.GET("/static/*", staticFS)
 
@@ -36,6 +38,8 @@ func AppRun(conf *viper.Viper) {
 	app.GET("/", handlers.Home)
 	app.GET("/home", handlers.Home)
 	app.GET("/login", handlers.Login)
+	app.POST("/login", handlers.LoginUser)
+	app.GET("/logout", handlers.LogoutUser)
 
 	// Start server
 	host := conf.GetString("http.host")

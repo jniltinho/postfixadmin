@@ -31,15 +31,14 @@ templ Login() {
 				<div id="login" class="container">
 					<h2 class="h2">Mail admins login here to administer your domain.</h2>
 					<div class="well">
-						<form name="frmLogin" method="post" action="" role="form" class="form-signin">
-							<input type="hidden" name="token" value="6f17709a20f3d6d1377ca76dad118ac3"/>
+						<form method="POST" action="/login" role="form" class="form-signin">
 							<div class="form-group">
 								<label for="fUsername">Login (email):</label>
-								<input class="form-control" type="text" name="fUsername" id="fUsername"/>
+								<input class="form-control" type="text" name="username" id="username"/>
 							</div>
 							<div class="form-group">
 								<label for="fPassword">Password:</label>
-								<input class="form-control" type="password" name="fPassword" id="fPassword"/>
+								<input class="form-control" type="password" name="password" id="password"/>
 							</div>
 							<div class="text-center">
 								<button class="btn btn-primary btn-lg" type="submit" name="submit" value="Login">Login</button>

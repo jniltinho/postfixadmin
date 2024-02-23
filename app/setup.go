@@ -10,10 +10,10 @@ import (
 var configFile []byte
 
 //go:embed static/*
-var content embed.FS
+var FS embed.FS
 
 func InitConfigFile() {
-	filename := GetFilenameDate()
+	filename := GetFileNameDate()
 	err := os.WriteFile(filename, configFile, 0644)
 	if err == nil {
 		println("Config file created ", filename)
@@ -22,7 +22,7 @@ func InitConfigFile() {
 	}
 }
 
-func GetFilenameDate() string {
+func GetFileNameDate() string {
 	const layout = "20060102"
 	t := time.Now()
 	return "local-" + t.Format(layout) + ".toml"
