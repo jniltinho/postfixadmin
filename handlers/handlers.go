@@ -33,3 +33,7 @@ func Home(c echo.Context) error {
 func Login(c echo.Context) error {
 	return render(c, view.Login())
 }
+
+func Login2(c echo.Context) error {
+	return render(c, view.Login2())
+}

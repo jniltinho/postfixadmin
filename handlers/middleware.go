@@ -32,6 +32,8 @@ func CheckSession(next echo.HandlerFunc) echo.HandlerFunc {
 			return c.Redirect(http.StatusSeeOther, "/login")
 		}
 
+		LOG("User: %s is Authenticated Token: %s", sess.Values["username"], sess.Values["session_token"])
+
 		return next(c)
 	}
 }

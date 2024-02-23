@@ -11,7 +11,7 @@ import (
 
 var users = map[string]string{
 	"admin":  "admin",
-	"admin1": "admin1",
+	"nilton": "nilton123",
 }
 
 type LoginUserRequest struct {
@@ -48,8 +48,8 @@ func LoginUser(c echo.Context) error {
 	sess.Values["username"] = userData.Username
 	sess.Values["authenticated"] = true
 	sess.Save(c.Request(), c.Response())
-	return c.Redirect(http.StatusSeeOther, "/")
-
+	//return c.Redirect(http.StatusSeeOther, "/")
+	return hxRedirect(c, "/")
 }
 
 func LogoutUser(c echo.Context) error {

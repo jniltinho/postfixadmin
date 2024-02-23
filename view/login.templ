@@ -1,5 +1,7 @@
 package view
 
+import "github.com/jniltinho/postfixadmin/view/layout"
+
 templ Login() {
 	<!DOCTYPE html>
 	<html lang="">
@@ -67,4 +69,34 @@ templ Login() {
 			</footer>
 		</body>
 	</html>
+}
+
+templ Login2() {
+	@layout.App(false) {
+		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
+			<div class="max-w-md w-full bg-base-300 py-12 px-8 rounded-xl">
+				<h1 class="text-center text-xl font-black mb-5">Mail admins login here to administer your domain.</h1>
+				@LoginForm()
+			</div>
+		</div>
+	}
+}
+
+templ LoginForm() {
+	<form hx-post="/login" hx-swap="outerHTML" class="space-y-4">
+		<div class="w-full">
+			<div class="label">
+				<span class="label-text font-bold">Login (email):</span>
+			</div>
+			<input type="text" name="username" autocomplete="off" required placeholder="" class="input input-bordered w-full"/>
+		</div>
+		<div class="w-full">
+			<div class="label">
+				<span class="label-text font-black">Password:</span>
+			</div>
+			<input type="password" name="password" required autocomplete="off" placeholder="" class="input input-bordered w-full"/>
+		</div>
+		<button type="submit" class="btn btn-primary w-full font-black text-xl">Login <i class="fa-solid fa-arrow-right"></i></button>
+	</form>
+
 }

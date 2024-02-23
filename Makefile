@@ -12,7 +12,8 @@ get:
 	@go mod tidy
 
 generate:
-	@templ generate
+	npx tailwindcss -i view/css/app.css -o app/static/styles.css
+	@templ generate view
 
 
 format:
@@ -30,3 +31,13 @@ clean:
 
 run:
 	./$(BINARY_NAME) serve --config=local.toml
+
+
+install:
+	@go install github.com/a-h/templ/cmd/templ@latest
+	@go get ./...
+	@go mod vendor
+	@go mod tidy
+	@go mod download
+	@npm install -D tailwindcss
+	@npm install -D daisyui@latest

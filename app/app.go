@@ -41,6 +41,9 @@ func AppRun(conf *viper.Viper) {
 	app.POST("/login", handlers.LoginUser)
 	app.GET("/logout", handlers.LogoutUser)
 
+	teste := app.Group("/adm")
+	teste.GET("/login", handlers.Login2)
+
 	// Start server
 	host := conf.GetString("http.host")
 	//app.Logger.Fatal(app.Start(host))
