@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
@@ -32,13 +33,18 @@ func LoginUser(c echo.Context) error {
 		return c.Redirect(http.StatusUnauthorized, "/login")
 	}
 
+	sessionToken := uuid.NewString()
+	MaxAge := 3600 // 1 hour
+
 	sess, _ := session.Get("session", c)
 	sess.Options = &sessions.Options{
 		Path:     "/",
-		MaxAge:   86400,
+		MaxAge:   MaxAge,
 		HttpOnly: true,
+		Secure:   true,
 	}
 
+	sess.Values["session_token"] = sessionToken
 	sess.Values["username"] = userData.Username
 	sess.Values["authenticated"] = true
 	sess.Save(c.Request(), c.Response())
@@ -57,6 +63,7 @@ func LogoutUser(c echo.Context) error {
 	}
 	sess.Values["username"] = nil
 	sess.Values["authenticated"] = false
+	sess.Values["session_token"] = nil
 
 	sess.Save(c.Request(), c.Response())
 	return c.Redirect(http.StatusSeeOther, "/login")
