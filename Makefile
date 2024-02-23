@@ -17,7 +17,7 @@ generate:
 
 
 format:
-	@templ fmt .
+	@templ fmt view
 
 build:
 	CGO_ENABLED=0 $(GOBUILD) -o $(BINARY_NAME) -v -ldflags="-s -w"

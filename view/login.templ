@@ -1,6 +1,7 @@
 package view
 
 import "github.com/jniltinho/postfixadmin/view/layout"
+import "github.com/jniltinho/postfixadmin/view/ui"
 
 templ Login() {
 	<!DOCTYPE html>
@@ -74,12 +75,13 @@ templ Login() {
 templ Login2() {
 	@layout.App(false) {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
-			<div class="max-w-md w-full bg-base-300 py-12 px-8 rounded-xl">
+			<div class="max-w-md w-full bg-base-300 py-12 px-8 rounded-xl shadow-xl">
 				<h1 class="text-center text-xl font-black mb-5">Mail admins login here to administer your domain.</h1>
 				@LoginForm()
 			</div>
 		</div>
 	}
+	@ui.Footer()
 }
 
 templ LoginForm() {
@@ -98,5 +100,4 @@ templ LoginForm() {
 		</div>
 		<button type="submit" class="btn btn-primary w-full font-black text-xl">Login <i class="fa-solid fa-arrow-right"></i></button>
 	</form>
-
 }
