@@ -30,7 +30,7 @@ func LoginUser(c echo.Context) error {
 	expectedPassword, ok := users[userData.Username]
 
 	if !ok || expectedPassword != userData.Password {
-		return c.Redirect(http.StatusUnauthorized, "/login")
+		return c.Redirect(http.StatusUnauthorized, "/adm/login")
 	}
 
 	sessionToken := uuid.NewString()
@@ -66,5 +66,5 @@ func LogoutUser(c echo.Context) error {
 	sess.Values["session_token"] = nil
 
 	sess.Save(c.Request(), c.Response())
-	return c.Redirect(http.StatusSeeOther, "/login")
+	return c.Redirect(http.StatusSeeOther, "/adm/login")
 }

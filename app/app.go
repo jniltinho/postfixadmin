@@ -37,12 +37,13 @@ func AppRun(conf *viper.Viper) {
 	// Routes
 	app.GET("/", handlers.Home)
 	app.GET("/home", handlers.Home)
-	app.GET("/login", handlers.Login)
-	app.POST("/login", handlers.LoginUser)
-	app.GET("/logout", handlers.LogoutUser)
+	//app.GET("/login", handlers.Login)
+	//app.GET("/logout", handlers.LogoutUser)
 
-	teste := app.Group("/adm")
-	teste.GET("/login", handlers.Login2)
+	adm := app.Group("/adm")
+	adm.GET("/login", handlers.Login2)
+	adm.POST("/login", handlers.LoginUser)
+	adm.GET("/logout", handlers.LogoutUser)
 
 	// Start server
 	host := conf.GetString("http.host")

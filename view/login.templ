@@ -34,7 +34,7 @@ templ Login() {
 				<div id="login" class="container">
 					<h2 class="h2">Mail admins login here to administer your domain.</h2>
 					<div class="well">
-						<form method="POST" action="/login" role="form" class="form-signin">
+						<form method="POST" action="/adm/login" role="form" class="form-signin">
 							<div class="form-group">
 								<label for="fUsername">Login (email):</label>
 								<input class="form-control" type="text" name="username" id="username"/>
@@ -85,7 +85,7 @@ templ Login2() {
 }
 
 templ LoginForm() {
-	<form hx-post="/login" hx-swap="outerHTML" class="space-y-4">
+	<form hx-post="/adm/login" hx-swap="outerHTML" class="space-y-4">
 		<div class="w-full">
 			<div class="label">
 				<span class="label-text font-bold">Login (email):</span>
