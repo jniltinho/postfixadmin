@@ -1,0 +1,74 @@
+package ui
+
+templ Navbar() {
+	<div class="navbar bg-base-300 shadow-xl fixed w-full top-0">
+		<div class="navbar-start">
+			<a href="/home"><img id="login_header_logo" src="/static/images/postbox.png" alt="Logo"/></a>
+			<ul class="menu menu-horizontal px-1">
+				<li>
+					<details>
+						<summary>Admin List</summary>
+						<ul class="p-2">
+							<li><a>Admin List</a></li>
+							<li><a>New Admin</a></li>
+						</ul>
+					</details>
+				</li>
+				<li>
+					<details>
+						<summary>Domain List</summary>
+						<ul class="p-2">
+							<li><a>Domain List</a></li>
+							<li><a>New Domain</a></li>
+						</ul>
+					</details>
+				</li>
+				<li>
+					<details>
+						<summary>Virtual List</summary>
+						<ul class="p-2">
+							<li><a>Virtual List</a></li>
+							<li><a>Add Mailbox</a></li>
+							<li><a>Add Alias</a></li>
+							<li><a>Add Alias Domain</a></li>
+						</ul>
+					</details>
+				</li>
+				<li>
+					<details>
+						<summary>Fecth Email</summary>
+						<ul class="p-2">
+							<li><a>Fecth Email</a></li>
+							<li><a>New Entry</a></li>
+						</ul>
+					</details>
+				</li>
+				<li>
+					<details>
+						<summary>Send Email</summary>
+						<ul class="p-2">
+							<li><a>Send Email</a></li>
+							<li><a>Broadcast Message</a></li>
+						</ul>
+					</details>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-end space-x-0.5">
+			<a class="btn btn-outline hover:bg-blue-700" href="/adm/logout">Password</a>
+			<a class="btn btn-outline hover:bg-blue-700" href="/adm/logout">View Log</a>
+			<a class="btn btn-outline hover:bg-blue-700" href="/adm/logout">Setup|Diagnostics</a>
+			<a class="btn btn-outline hover:bg-blue-700" href="/adm/logout">Logout</a>
+		</div>
+	</div>
+}
+
+templ NavbarLogin() {
+	<div class="navbar bg-base-300 shadow-xl fixed w-full top-0">
+		<div class="navbar-start">
+			<div class="items-center">
+				<img src="/static/images/logo-default.png" alt="Logo"/>
+			</div>
+		</div>
+	</div>
+}

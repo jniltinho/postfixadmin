@@ -40,6 +40,7 @@ func AppRun(conf *viper.Viper) {
 	// Routes
 	app.GET("/", handlers.Home)
 	app.GET("/home", handlers.Home)
+	app.GET("/home2", handlers.HomeOld)
 	//app.GET("/login", handlers.LoginOld)
 	//app.GET("/logout", handlers.LogoutUser)
 

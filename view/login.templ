@@ -74,6 +74,7 @@ templ LoginOld() {
 
 templ Login(loginURL string) {
 	@layout.App(false) {
+		@ui.NavbarLogin()
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
 			<div class="max-w-md w-full bg-base-300 py-12 px-8 rounded-xl shadow-xl">
 				<h1 class="text-center text-xl font-black mb-5">Mail admins login here to administer your domain.</h1>
