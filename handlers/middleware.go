@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"fmt"
-	"net/http"
 	"strings"
 
 	"github.com/labstack/echo-contrib/session"
@@ -23,13 +22,14 @@ func WithAuth(next echo.HandlerFunc) echo.HandlerFunc {
 func CheckSession(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 
-		if strings.Contains(c.Request().URL.Path, "/adm/login") || strings.Contains(c.Request().URL.Path, "/static") {
+		if strings.Contains(c.Request().URL.Path, GetRoutes["LoginUrl"]) || strings.Contains(c.Request().URL.Path, "/static") {
 			return next(c)
 		}
 
 		sess, _ := session.Get("session", c)
 		if auth, ok := sess.Values["authenticated"].(bool); !ok || !auth {
-			return c.Redirect(http.StatusSeeOther, "/adm/login")
+			//return c.Redirect(http.StatusSeeOther, GetRoutes["LoginUrl"])
+			return hxRedirect(c, GetRoutes["LoginUrl"])
 		}
 
 		LOG("User: %s is Authenticated Token: %s", sess.Values["username"], sess.Values["session_token"])
