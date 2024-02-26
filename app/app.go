@@ -3,9 +3,12 @@ package app
 import (
 	"net/http"
 
-	"github.com/jniltinho/postfixadmin/database"
-	"github.com/jniltinho/postfixadmin/handlers"
-	"github.com/jniltinho/postfixadmin/log"
+	"postfixadmin/database"
+
+	"postfixadmin/handlers"
+
+	"postfixadmin/log"
+
 	"github.com/spf13/viper"
 
 	"github.com/gorilla/sessions"
@@ -37,13 +40,16 @@ func AppRun(conf *viper.Viper) {
 	// Routes
 	app.GET("/", handlers.Home)
 	app.GET("/home", handlers.Home)
-	//app.GET("/login", handlers.Login)
+	//app.GET("/login", handlers.LoginOld)
 	//app.GET("/logout", handlers.LogoutUser)
 
 	adm := app.Group("/adm")
-	adm.GET("/login", handlers.Login2)
+	adm.GET("/login", handlers.Login)
 	adm.POST("/login", handlers.LoginUser)
 	adm.GET("/logout", handlers.LogoutUser)
+
+	//GetRoute = handlers.GetURL(app)
+	//loginUrl := GetRoute["handlers.Login"]
 
 	// Start server
 	host := conf.GetString("http.host")

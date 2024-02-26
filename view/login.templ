@@ -1,9 +1,9 @@
 package view
 
-import "github.com/jniltinho/postfixadmin/view/layout"
-import "github.com/jniltinho/postfixadmin/view/ui"
+import "postfixadmin/view/layout"
+import "postfixadmin/view/ui"
 
-templ Login() {
+templ LoginOld() {
 	<!DOCTYPE html>
 	<html lang="">
 		<head>
@@ -72,20 +72,20 @@ templ Login() {
 	</html>
 }
 
-templ Login2() {
+templ Login(loginURL string) {
 	@layout.App(false) {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
 			<div class="max-w-md w-full bg-base-300 py-12 px-8 rounded-xl shadow-xl">
 				<h1 class="text-center text-xl font-black mb-5">Mail admins login here to administer your domain.</h1>
-				@LoginForm()
+				@LoginForm(loginURL)
 			</div>
 		</div>
 	}
-	@ui.Footer()
+	@ui.FooterLogin()
 }
 
-templ LoginForm() {
-	<form hx-post="/adm/login" hx-swap="outerHTML" class="space-y-4">
+templ LoginForm(loginURL string) {
+	<form hx-post={ loginURL } hx-swap="outerHTML" class="space-y-4">
 		<div class="w-full">
 			<div class="label">
 				<span class="label-text font-bold">Login (email):</span>

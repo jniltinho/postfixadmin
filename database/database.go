@@ -4,8 +4,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jniltinho/postfixadmin/config"
-	"github.com/jniltinho/postfixadmin/log"
+	"postfixadmin/config"
+
+	"postfixadmin/log"
+
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"

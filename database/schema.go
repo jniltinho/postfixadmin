@@ -4,7 +4,8 @@ import (
 	_ "embed"
 	"regexp"
 
-	"github.com/jniltinho/postfixadmin/log"
+	"postfixadmin/log"
+
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 )

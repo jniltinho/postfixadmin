@@ -6,7 +6,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/jniltinho/postfixadmin/app"
+	"postfixadmin/app"
+
 	"github.com/spf13/cobra"
 )
 

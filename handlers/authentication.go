@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"net/http"
-
 	"github.com/google/uuid"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
@@ -30,7 +28,9 @@ func LoginUser(c echo.Context) error {
 	expectedPassword, ok := users[userData.Username]
 
 	if !ok || expectedPassword != userData.Password {
-		return c.Redirect(http.StatusUnauthorized, "/adm/login")
+		LOG("Failed to authenticate user: %s", userData.Username)
+		//return c.Redirect(http.StatusUnauthorized, "/adm/login")
+		return hxRedirect(c, GetRoutes["LoginUrl"])
 	}
 
 	sessionToken := uuid.NewString()
@@ -43,6 +43,8 @@ func LoginUser(c echo.Context) error {
 		HttpOnly: true,
 		Secure:   true,
 	}
+
+	LOG("User: %s is", userData.Username)
 
 	sess.Values["session_token"] = sessionToken
 	sess.Values["username"] = userData.Username
@@ -66,5 +68,5 @@ func LogoutUser(c echo.Context) error {
 	sess.Values["session_token"] = nil
 
 	sess.Save(c.Request(), c.Response())
-	return c.Redirect(http.StatusSeeOther, "/adm/login")
+	return hxRedirect(c, GetRoutes["LoginUrl"])
 }

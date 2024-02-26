@@ -1,10 +1,9 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package main
 
-import "github.com/jniltinho/postfixadmin/cmd"
+import "postfixadmin/cmd"
 
 func main() {
 	cmd.Execute()

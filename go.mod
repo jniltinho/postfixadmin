@@ -1,4 +1,4 @@
-module github.com/jniltinho/postfixadmin
+module postfixadmin
 
 go 1.22
 
