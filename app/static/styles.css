@@ -1961,6 +1961,18 @@ details.collapse summary::-webkit-details-marker {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.table-xs :not(thead):not(tfoot) tr {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.table-xs :where(th, td) {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2024,10 +2036,6 @@ details.collapse summary::-webkit-details-marker {
 
 .max-w-md {
   max-width: 28rem;
-}
-
-.grid-flow-col {
-  grid-auto-flow: column;
 }
 
 .items-center {

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log/slog"
 	"net/http"
 	"strings"
 
@@ -32,9 +33,10 @@ func hxRedirect(c echo.Context, to string) error {
 
 func LOG(format string, a ...any) {
 	msg := fmt.Sprintf(format, a...)
-	r := len(msg) + 2
-
-	color.Green(strings.Repeat("-", r))
-	color.Red(msg)
-	color.Green(strings.Repeat("-", r))
+	r := len(msg) + 26
+	color.Red(strings.Repeat("-", r))
+	color.Set(color.FgGreen)
+	slog.Info(msg)
+	color.Unset()
+	color.Red(strings.Repeat("-", r))
 }
