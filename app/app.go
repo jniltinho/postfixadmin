@@ -51,8 +51,6 @@ func AppRun(conf *viper.Viper) {
 	adm.POST("/login", handlers.LoginUser)
 	adm.GET("/logout", handlers.LogoutUser)
 
-	handlers.GeneratePass("Wolverine123")
-
 	//GetRoute = handlers.GetURL(app)
 	//loginUrl := GetRoute["handlers.Login"]
 
