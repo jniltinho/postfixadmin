@@ -41,6 +41,8 @@ func AppRun(conf *viper.Viper) {
 	app.GET("/", handlers.Home)
 	app.GET("/home", handlers.Home)
 	app.GET("/home2", handlers.HomeOld)
+
+	app.GET("/list/domain", handlers.ListDomains)
 	//app.GET("/login", handlers.LoginOld)
 	//app.GET("/logout", handlers.LogoutUser)
 

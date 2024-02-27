@@ -1,0 +1,169 @@
+package view
+
+import "postfixadmin/view/layout"
+
+templ ListAllDomains() {
+	@layout.BASEOLD() {
+		<div class="container" style="min-width: 600px; width: min-content" role="main">
+			<!-- flash_error.tpl -->
+			<br clear="all"/>
+			<br/>
+			<div class="panel panel-default">
+				<table class="table table-hover" border="0" id="admin_table">
+					<!-- TODO: 'admin_table' needed because of CSS for table header -->
+					<thead>
+						<tr class="header">
+							<th>Domain</th>
+							<th>Description</th>
+							<th>Aliases</th>
+							<th>Mailboxes</th>
+							<th>Mail server is backup MX</th>
+							<th>Active</th>
+							<th>Last modified</th>
+							<th>Pass expires</th>
+							<th>&nbsp;</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tr>
+						<td>
+							<a href="list-virtual.php?domain=cursopostfix.net.br">cursopostfix.net.br</a>
+						</td>
+						<td>
+							Curso Postfix
+						</td>
+						<td>
+							<div class="quota quota_low" style="width:4.8px;"></div>
+							<div class="quota_bg"></div>
+							<div class="quota_text quota_text_low">4 / 100</div>
+						</td>
+						<td>
+							<div class="quota quota_low" style="width:0px;"></div>
+							<div class="quota_bg"></div>
+							<div class="quota_text quota_text_low">0 / 100</div>
+						</td>
+						<td>
+							NO
+						</td>
+						<td>
+							<a class="btn btn-warning" href="editactive.php?table=domain&id=cursopostfix.net.br&active=0&token=d9ace879c7e4f1b5448f0e32428eb3d2">YES</a>
+						</td>
+						<td>
+							2024-02-27
+						</td>
+						<td>
+							19000
+						</td>
+						<td>
+							<a class="btn btn-primary" href="edit.php?table=domain&edit=cursopostfix.net.br">edit</a>
+						</td>
+						<td>
+							<form method="post" action="delete.php">
+								<input type="hidden" name="table" value="domain"/>
+								<input type="hidden" name="delete" value="cursopostfix.net.br"/>
+								<input type="hidden" name="token" value="d9ace879c7e4f1b5448f0e32428eb3d2"/>
+								<button class="btn btn-danger" onclick="return confirm('Do you really want to delete all records for the domain cursopostfix.net.br? This can not be undone!')">
+									del
+								</button>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="list-virtual.php?domain=linuxpro.com.br">linuxpro.com.br</a>
+						</td>
+						<td>
+							Linuxpro
+						</td>
+						<td>
+							<div class="quota quota_low" style="width:48px;"></div>
+							<div class="quota_bg"></div>
+							<div class="quota_text quota_text_low">4 / 10</div>
+						</td>
+						<td>
+							<div class="quota quota_low" style="width:24px;"></div>
+							<div class="quota_bg"></div>
+							<div class="quota_text quota_text_low">2 / 10</div>
+						</td>
+						<td>
+							NO
+						</td>
+						<td>
+							<a class="btn btn-warning" href="editactive.php?table=domain&id=linuxpro.com.br&active=0&token=d9ace879c7e4f1b5448f0e32428eb3d2">YES</a>
+						</td>
+						<td>
+							2024-02-27
+						</td>
+						<td>
+							365
+						</td>
+						<td>
+							<a class="btn btn-primary" href="edit.php?table=domain&edit=linuxpro.com.br">edit</a>
+						</td>
+						<td>
+							<form method="post" action="delete.php">
+								<input type="hidden" name="table" value="domain"/>
+								<input type="hidden" name="delete" value="linuxpro.com.br"/>
+								<input type="hidden" name="token" value="d9ace879c7e4f1b5448f0e32428eb3d2"/>
+								<button class="btn btn-danger" onclick="return confirm('Do you really want to delete all records for the domain linuxpro.com.br? This can not be undone!')">
+									del
+								</button>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="list-virtual.php?domain=meudominio.com">meudominio.com</a>
+						</td>
+						<td>
+							meudominio.com
+						</td>
+						<td>
+							<div class="quota quota_low" style="width:48px;"></div>
+							<div class="quota_bg"></div>
+							<div class="quota_text quota_text_low">4 / 10</div>
+						</td>
+						<td>
+							<div class="quota quota_low" style="width:0px;"></div>
+							<div class="quota_bg"></div>
+							<div class="quota_text quota_text_low">0 / 10</div>
+						</td>
+						<td>
+							NO
+						</td>
+						<td>
+							<a class="btn btn-warning" href="editactive.php?table=domain&id=meudominio.com&active=0&token=d9ace879c7e4f1b5448f0e32428eb3d2">YES</a>
+						</td>
+						<td>
+							2024-02-27
+						</td>
+						<td>
+							365
+						</td>
+						<td>
+							<a class="btn btn-primary" href="edit.php?table=domain&edit=meudominio.com">edit</a>
+						</td>
+						<td>
+							<form method="post" action="delete.php">
+								<input type="hidden" name="table" value="domain"/>
+								<input type="hidden" name="delete" value="meudominio.com"/>
+								<input type="hidden" name="token" value="d9ace879c7e4f1b5448f0e32428eb3d2"/>
+								<button class="btn btn-danger" onclick="return confirm('Do you really want to delete all records for the domain meudominio.com? This can not be undone!')">
+									del
+								</button>
+							</form>
+						</td>
+					</tr>
+				</table>
+				<div class="panel-footer">
+					<div class="btn-toolbar" role="toolbar">
+						<div class="btn-group pull-right">
+							<a href="edit.php?table=domain" role="button" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Domain</a>
+							<a href="list.php?table=domain&output=csv&domain=" role="button" class="btn btn-default"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> Download this list as CSV file</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
