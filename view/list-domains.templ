@@ -4,15 +4,12 @@ import "postfixadmin/view/layout"
 
 templ ListAllDomains() {
 	@layout.BASEOLD() {
-		<div class="container" style="min-width: 600px; width: min-content" role="main">
-			<!-- flash_error.tpl -->
-			<br clear="all"/>
-			<br/>
-			<div class="panel panel-default">
-				<table class="table table-hover" border="0" id="admin_table">
+		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
+			<div class="border border-slate-600 shadow-xl">
+				<table class="table table-zebra">
 					<!-- TODO: 'admin_table' needed because of CSS for table header -->
 					<thead>
-						<tr class="header">
+						<tr class="border border-slate-600">
 							<th>Domain</th>
 							<th>Description</th>
 							<th>Aliases</th>
@@ -25,28 +22,24 @@ templ ListAllDomains() {
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
-					<tr>
+					<tr class="border border-slate-600">
 						<td>
-							<a href="list-virtual.php?domain=cursopostfix.net.br">cursopostfix.net.br</a>
+							<a>cursopostfix.net.br</a>
 						</td>
 						<td>
 							Curso Postfix
 						</td>
 						<td>
-							<div class="quota quota_low" style="width:4.8px;"></div>
-							<div class="quota_bg"></div>
 							<div class="quota_text quota_text_low">4 / 100</div>
 						</td>
 						<td>
-							<div class="quota quota_low" style="width:0px;"></div>
-							<div class="quota_bg"></div>
 							<div class="quota_text quota_text_low">0 / 100</div>
 						</td>
 						<td>
 							NO
 						</td>
 						<td>
-							<a class="btn btn-warning" href="editactive.php?table=domain&id=cursopostfix.net.br&active=0&token=d9ace879c7e4f1b5448f0e32428eb3d2">YES</a>
+							<a class="btn btn-warning btn-sm" href="#">YES</a>
 						</td>
 						<td>
 							2024-02-27
@@ -55,41 +48,35 @@ templ ListAllDomains() {
 							19000
 						</td>
 						<td>
-							<a class="btn btn-primary" href="edit.php?table=domain&edit=cursopostfix.net.br">edit</a>
+							<a class="btn btn-outline hover:bg-blue-700 btn-sm" href="/EditDomain/cursopostfix.net.br">Edit</a>
 						</td>
 						<td>
-							<form method="post" action="delete.php">
-								<input type="hidden" name="table" value="domain"/>
+							<form method="post" action="/DelDomain">
 								<input type="hidden" name="delete" value="cursopostfix.net.br"/>
-								<input type="hidden" name="token" value="d9ace879c7e4f1b5448f0e32428eb3d2"/>
-								<button class="btn btn-danger" onclick="return confirm('Do you really want to delete all records for the domain cursopostfix.net.br? This can not be undone!')">
-									del
-								</button>
+								<button class="btn btn-error btn-sm">Del</button>
 							</form>
 						</td>
 					</tr>
-					<tr>
+					<tr class="border border-slate-600">
 						<td>
-							<a href="list-virtual.php?domain=linuxpro.com.br">linuxpro.com.br</a>
+							<a>linuxpro.com.br</a>
 						</td>
 						<td>
 							Linuxpro
 						</td>
 						<td>
-							<div class="quota quota_low" style="width:48px;"></div>
+							<div class="quota quota_low"></div>
 							<div class="quota_bg"></div>
 							<div class="quota_text quota_text_low">4 / 10</div>
 						</td>
 						<td>
-							<div class="quota quota_low" style="width:24px;"></div>
-							<div class="quota_bg"></div>
 							<div class="quota_text quota_text_low">2 / 10</div>
 						</td>
 						<td>
 							NO
 						</td>
 						<td>
-							<a class="btn btn-warning" href="editactive.php?table=domain&id=linuxpro.com.br&active=0&token=d9ace879c7e4f1b5448f0e32428eb3d2">YES</a>
+							<a class="btn btn-warning btn-sm" href="#">YES</a>
 						</td>
 						<td>
 							2024-02-27
@@ -98,41 +85,33 @@ templ ListAllDomains() {
 							365
 						</td>
 						<td>
-							<a class="btn btn-primary" href="edit.php?table=domain&edit=linuxpro.com.br">edit</a>
+							<a class="btn btn-outline hover:bg-blue-700 btn-sm" href="/EditDomain/linuxpro.com.br">Edit</a>
 						</td>
 						<td>
-							<form method="post" action="delete.php">
-								<input type="hidden" name="table" value="domain"/>
+							<form method="post" action="/DelDomain">
 								<input type="hidden" name="delete" value="linuxpro.com.br"/>
-								<input type="hidden" name="token" value="d9ace879c7e4f1b5448f0e32428eb3d2"/>
-								<button class="btn btn-danger" onclick="return confirm('Do you really want to delete all records for the domain linuxpro.com.br? This can not be undone!')">
-									del
-								</button>
+								<button class="btn btn-error btn-sm">Del</button>
 							</form>
 						</td>
 					</tr>
-					<tr>
+					<tr class="border border-slate-600">
 						<td>
-							<a href="list-virtual.php?domain=meudominio.com">meudominio.com</a>
+							<a>meudominio.com</a>
 						</td>
 						<td>
 							meudominio.com
 						</td>
 						<td>
-							<div class="quota quota_low" style="width:48px;"></div>
-							<div class="quota_bg"></div>
 							<div class="quota_text quota_text_low">4 / 10</div>
 						</td>
 						<td>
-							<div class="quota quota_low" style="width:0px;"></div>
-							<div class="quota_bg"></div>
 							<div class="quota_text quota_text_low">0 / 10</div>
 						</td>
 						<td>
 							NO
 						</td>
 						<td>
-							<a class="btn btn-warning" href="editactive.php?table=domain&id=meudominio.com&active=0&token=d9ace879c7e4f1b5448f0e32428eb3d2">YES</a>
+							<a class="btn btn-warning btn-sm" href="#">YES</a>
 						</td>
 						<td>
 							2024-02-27
@@ -141,16 +120,12 @@ templ ListAllDomains() {
 							365
 						</td>
 						<td>
-							<a class="btn btn-primary" href="edit.php?table=domain&edit=meudominio.com">edit</a>
+							<a class="btn btn-outline hover:bg-blue-700 btn-sm" href="/EditDomain/meudominio.com">Edit</a>
 						</td>
 						<td>
-							<form method="post" action="delete.php">
-								<input type="hidden" name="table" value="domain"/>
+							<form method="post" action="DelDomain">
 								<input type="hidden" name="delete" value="meudominio.com"/>
-								<input type="hidden" name="token" value="d9ace879c7e4f1b5448f0e32428eb3d2"/>
-								<button class="btn btn-danger" onclick="return confirm('Do you really want to delete all records for the domain meudominio.com? This can not be undone!')">
-									del
-								</button>
+								<button class="btn btn-error btn-sm">Del</button>
 							</form>
 						</td>
 					</tr>
@@ -158,8 +133,7 @@ templ ListAllDomains() {
 				<div class="panel-footer">
 					<div class="btn-toolbar" role="toolbar">
 						<div class="btn-group pull-right">
-							<a href="edit.php?table=domain" role="button" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Domain</a>
-							<a href="list.php?table=domain&output=csv&domain=" role="button" class="btn btn-default"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> Download this list as CSV file</a>
+							<a href="/add/domain" class="btn btn-outline hover:bg-blue-700 w-full"><span></span>Add New Domain</a>
 						</div>
 					</div>
 				</div>

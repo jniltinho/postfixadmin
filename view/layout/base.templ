@@ -41,6 +41,29 @@ templ BASEOLD() {
 			<link rel="stylesheet" href="/static/styles.css"/>
 			<script src="/static/js/htmx.min.js"></script>
 			<script src="/static/js/font-awesome-6.5.1-all.min.js"></script>
+		</head>
+		<body class="antialiased">
+			<!-- navbar -->
+			@ui.Navbar()
+			<!-- navbar -->
+			{ children... }
+			<!-- footer -->
+			@ui.Footer()
+			<!-- footer -->
+		</body>
+	</html>
+}
+
+templ BASE() {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<title>Go PostfixAdmin</title>
+			<link rel="shortcut icon" href="/static/images/favicon.ico"/>
+			<script src="/static/js/jquery-3.7.0.min.js"></script>
+			<link rel="stylesheet" href="/static/styles.css"/>
+			<script src="/static/js/htmx.min.js"></script>
+			<script src="/static/js/font-awesome-6.5.1-all.min.js"></script>
 			<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>
 			<script src="/static/css/bootstrap-3.4.1-dist/js/moment-with-locales.min.js"></script>
 			<script src="/static/css/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
