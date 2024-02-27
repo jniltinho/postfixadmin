@@ -22,7 +22,6 @@ func Login(c echo.Context) error {
 	return render(c, view.Login(LoginUrl))
 }
 
-func ListDomains(c echo.Context) error {
-	//LoginUrl := GetRoutes["LoginUrl"]
-	return render(c, view.ListAllDomains())
+func ListDomain(c echo.Context) error {
+	return render(c, view.ListDomain())
 }

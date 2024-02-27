@@ -42,7 +42,7 @@ func AppRun(conf *viper.Viper) {
 	app.GET("/home", handlers.Home)
 	app.GET("/home2", handlers.HomeOld)
 
-	app.GET("/list/domain", handlers.ListDomains)
+	app.GET("/ListDomain", handlers.ListDomain)
 	//app.GET("/login", handlers.LoginOld)
 	//app.GET("/logout", handlers.LogoutUser)
 
@@ -50,6 +50,8 @@ func AppRun(conf *viper.Viper) {
 	adm.GET("/login", handlers.Login)
 	adm.POST("/login", handlers.LoginUser)
 	adm.GET("/logout", handlers.LogoutUser)
+
+	handlers.GeneratePass("Wolverine123")
 
 	//GetRoute = handlers.GetURL(app)
 	//loginUrl := GetRoute["handlers.Login"]

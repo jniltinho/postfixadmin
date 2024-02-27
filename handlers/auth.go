@@ -1,16 +1,14 @@
 package handlers
 
 import (
+	"postfixadmin/database"
+	"postfixadmin/model"
+
 	"github.com/google/uuid"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 )
-
-var users = map[string]string{
-	"admin":  "admin",
-	"nilton": "nilton123",
-}
 
 type LoginUserRequest struct {
 	Username string `json:"username" xml:"username" form:"username" query:"username"`
@@ -26,7 +24,7 @@ func LoginUser(c echo.Context) error {
 	}
 
 	//expectedPassword, ok := users[userData.Username]
-	ok := CheckLogin(userData.Username, userData.Password)
+	ok := checkLogin(userData.Username, userData.Password)
 
 	if !ok {
 		LOG("Failed to authenticate user: %s", userData.Username)
@@ -70,4 +68,23 @@ func LogoutUser(c echo.Context) error {
 
 	sess.Save(c.Request(), c.Response())
 	return hxRedirect(c, GetRoutes["LoginUrl"])
+}
+
+func checkLogin(login, password string) bool {
+	var user model.Admin
+	res := database.DB().Select("password").First(&user, "username = ? AND active = 1", login)
+
+	if res.RowsAffected == 0 {
+		//fmt.Println("User not found")
+		return false
+	}
+
+	// Compare given user password with stored in found user.
+	if !ComparePass(user.Password, password) {
+		//fmt.Println("User not found")
+		return false
+	}
+
+	//fmt.Println("User found")
+	return true
 }
