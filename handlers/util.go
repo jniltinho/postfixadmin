@@ -2,13 +2,13 @@ package handlers
 
 import (
 	"fmt"
-	"log/slog"
 	"net/http"
 	"strings"
 
 	"github.com/a-h/templ"
 	"github.com/fatih/color"
 	"github.com/labstack/echo/v4"
+	"golang.org/x/exp/slog"
 )
 
 var GetRoutes = map[string]string{
