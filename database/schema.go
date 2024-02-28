@@ -2,18 +2,16 @@ package database
 
 import (
 	_ "embed"
+	"log/slog"
 	"regexp"
 
-	"postfixadmin/log"
-
 	"github.com/spf13/viper"
-	"go.uber.org/zap"
 )
 
 //go:embed scripts/postfixadmin.sql
 var schema []byte
 
-func CreateSchema(conf *viper.Viper, zlog *log.Logger) {
+func CreateSchema(conf *viper.Viper) {
 
 	query := string(schema)
 
@@ -21,7 +19,7 @@ func CreateSchema(conf *viper.Viper, zlog *log.Logger) {
 	for number, line := range lines {
 		if len(line) > 0 {
 			if err := DB().Exec(line).Error; err != nil {
-				zlog.Fatal("Cannot create schema", zap.Error(err), zap.Int("Line:", number))
+				slog.Error("Cannot create schema", err, "Line:", number)
 			}
 		}
 	}

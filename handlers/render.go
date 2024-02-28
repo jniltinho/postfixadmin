@@ -1,14 +1,10 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/a-h/templ"
-	"github.com/fatih/color"
 	"github.com/labstack/echo/v4"
-	"golang.org/x/exp/slog"
 )
 
 var GetRoutes = map[string]string{
@@ -29,14 +25,4 @@ func hxRedirect(c echo.Context, to string) error {
 	}
 
 	return c.Redirect(http.StatusSeeOther, to)
-}
-
-func LOG(format string, a ...any) {
-	msg := fmt.Sprintf(format, a...)
-	r := len(msg) + 26
-	color.Red(strings.Repeat("-", r))
-	color.Set(color.FgGreen)
-	slog.Info(msg)
-	color.Unset()
-	color.Red(strings.Repeat("-", r))
 }

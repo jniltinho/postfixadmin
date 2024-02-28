@@ -4,15 +4,14 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
 	"os"
+	"postfixadmin/util"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
-var zaplog bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -46,7 +45,6 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./local.toml)")
-	rootCmd.PersistentFlags().BoolVarP(&zaplog, "zaplog", "", false, "Enable Zap logger (defualt is false)")
 	//rootCmd.PersistentFlags().BoolP("init", "", false, "Create a new configuration file")
 
 	// Cobra also supports local flags, which will only run
@@ -70,11 +68,10 @@ func initConfig() {
 		viper.SetConfigName("local")
 	}
 
-	viper.SetDefault("ZAP_LOG", zaplog)
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+		util.LOG("Using config file: %s", viper.ConfigFileUsed())
 	}
 }

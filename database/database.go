@@ -1,15 +1,14 @@
 package database
 
 import (
+	"log/slog"
 	"sync"
 	"time"
 
 	"postfixadmin/config"
-
-	"postfixadmin/log"
+	"postfixadmin/util"
 
 	"github.com/spf13/viper"
-	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -30,7 +29,7 @@ func (i *DBInstance) Instance() any {
 	return i.instance
 }
 
-func dbInit(conf *viper.Viper, zlog *log.Logger) any {
+func dbInit(conf *viper.Viper) any {
 
 	DSN := config.GetMysqlDSN(conf)
 
@@ -46,7 +45,8 @@ func dbInit(conf *viper.Viper, zlog *log.Logger) any {
 
 	db, err := gorm.Open(mysql.Open(DSN), cfg)
 	if err != nil {
-		zlog.Fatal("Cannot connect to database", zap.Error(err))
+		//slog.Fatal("Cannot connect to database", zap.Error(err))
+		slog.Error("Cannot connect to database", err)
 	}
 
 	stdDB, _ := db.DB()
@@ -62,10 +62,10 @@ func DB() *gorm.DB {
 	return dbInstance.Instance().(*gorm.DB)
 }
 
-func ConnectDb(conf *viper.Viper, zlog *log.Logger) {
-	dbInstance = &DBInstance{initializer: func() any { return dbInit(conf, zlog) }}
-	zlog.Info("Database Initializer")
+func ConnectDb(conf *viper.Viper) {
+	dbInstance = &DBInstance{initializer: func() any { return dbInit(conf) }}
+	util.LOG("Database Initializer")
 
 	// Create Default Tables if not exists
-	CreateSchema(conf, zlog)
+	CreateSchema(conf)
 }

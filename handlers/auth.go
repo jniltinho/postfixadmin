@@ -3,6 +3,7 @@ package handlers
 import (
 	"postfixadmin/database"
 	"postfixadmin/model"
+	"postfixadmin/util"
 
 	"github.com/google/uuid"
 	"github.com/gorilla/sessions"
@@ -27,7 +28,7 @@ func LoginUser(c echo.Context) error {
 	ok := checkLogin(userData.Username, userData.Password)
 
 	if !ok {
-		LOG("Failed to authenticate user: %s", userData.Username)
+		util.LOG("Failed to authenticate user: %s", userData.Username)
 		//return c.Redirect(http.StatusUnauthorized, "/adm/login")
 		return hxRedirect(c, GetRoutes["LoginUrl"])
 	}
@@ -43,7 +44,7 @@ func LoginUser(c echo.Context) error {
 		Secure:   true,
 	}
 
-	LOG("User: %s is Authenticated Token: %s", userData.Username, sessionToken)
+	util.LOG("User: %s is Authenticated Token: %s", userData.Username, sessionToken)
 
 	sess.Values["session_token"] = sessionToken
 	sess.Values["username"] = userData.Username

@@ -3,6 +3,7 @@ package app
 import (
 	"embed"
 	"os"
+	"postfixadmin/util"
 	"time"
 )
 
@@ -16,9 +17,9 @@ func InitConfigFile() {
 	filename := GetFileNameDate()
 	err := os.WriteFile(filename, configFile, 0644)
 	if err == nil {
-		println("Config file created ", filename)
+		util.LOG("Config file created %s", filename)
 	} else {
-		println("Error creating config file " + err.Error())
+		util.LOG("Error creating config file %s", err.Error())
 	}
 }
 

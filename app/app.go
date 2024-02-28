@@ -3,19 +3,15 @@ package app
 import (
 	"postfixadmin/database"
 
-	"postfixadmin/log"
-
 	"github.com/spf13/viper"
 
 	"github.com/labstack/echo/v4"
 )
 
 func AppRun(conf *viper.Viper) {
-	// Logger
-	logger := log.NewLog(conf)
-	secret := conf.GetString("security.jwt.key")
 
-	database.ConnectDb(conf, logger)
+	secret := conf.GetString("security.jwt.key")
+	database.ConnectDb(conf)
 	// Echo instance
 	app := echo.New()
 

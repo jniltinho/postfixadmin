@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"postfixadmin/app"
+	"postfixadmin/util"
 
 	"github.com/spf13/cobra"
 )
@@ -17,7 +18,7 @@ var initCmd = &cobra.Command{
 	Short: "Create a new configuration file",
 	Long:  `Create a new configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		println("Create a new configuration file")
+		util.LOG("Create a new configuration file")
 		app.InitConfigFile()
 		os.Exit(0)
 	},
