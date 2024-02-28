@@ -3,9 +3,8 @@ package app
 import (
 	"postfixadmin/database"
 
-	"github.com/spf13/viper"
-
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/viper"
 )
 
 func AppRun(conf *viper.Viper) {

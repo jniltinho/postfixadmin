@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"net/http"
 	"postfixadmin/view"
 
 	"github.com/labstack/echo/v4"
@@ -8,20 +9,20 @@ import (
 
 // Home is the handler for the home page
 func Home(c echo.Context) error {
-	return render(c, view.HomeNew())
+	return Render(c, http.StatusOK, view.HomeNew())
 }
 
 // Home is the handler for the home page
 func HomeOld(c echo.Context) error {
-	return render(c, view.Home())
+	return Render(c, http.StatusOK, view.Home())
 }
 
 // Login is the handler for the login page
 func Login(c echo.Context) error {
 	LoginUrl := GetRoutes["LoginUrl"]
-	return render(c, view.Login(LoginUrl))
+	return Render(c, http.StatusOK, view.Login(LoginUrl))
 }
 
 func ListDomain(c echo.Context) error {
-	return render(c, view.ListDomain())
+	return Render(c, http.StatusOK, view.ListDomain())
 }
