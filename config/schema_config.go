@@ -1,17 +1,15 @@
-package database
+package config
 
 import (
 	_ "embed"
 	"log/slog"
 	"regexp"
-
-	"github.com/spf13/viper"
 )
 
 //go:embed scripts/postfixadmin.sql
 var schema []byte
 
-func CreateSchema(conf *viper.Viper) {
+func CreateSchema() {
 
 	query := string(schema)
 

@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"postfixadmin/database"
+	"postfixadmin/config"
 	"postfixadmin/model"
 	"postfixadmin/util"
 
@@ -73,7 +73,7 @@ func LogoutUser(c echo.Context) error {
 
 func checkLogin(login, password string) bool {
 	var user model.Admin
-	res := database.DB().Select("password").First(&user, "username = ? AND active = 1", login)
+	res := config.DB().Select("password").First(&user, "username = ? AND active = 1", login)
 
 	if res.RowsAffected == 0 {
 		//fmt.Println("User not found")

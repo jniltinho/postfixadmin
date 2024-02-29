@@ -5,7 +5,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/tredoe/osutil/v2/userutil/crypt/md5_crypt"
+	"postfixadmin/util/crypt/md5_crypt"
+
 	"golang.org/x/crypto/bcrypt"
 )
 

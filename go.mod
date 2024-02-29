@@ -12,9 +12,7 @@ require (
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
 	github.com/tredoe/osutil/v2 v2.0.0-rc.16.0.20210906084627-10a53b06341f
-	go.uber.org/zap v1.24.0
 	golang.org/x/crypto v0.17.0
-	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gorm.io/driver/mysql v1.5.4
 	gorm.io/gorm v1.25.7
 )

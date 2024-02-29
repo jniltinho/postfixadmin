@@ -1,16 +1,25 @@
 package app
 
 import (
-	"postfixadmin/database"
+	"postfixadmin/config"
 
 	"github.com/labstack/echo/v4"
 	"github.com/spf13/viper"
 )
 
-func AppRun(conf *viper.Viper) {
+type AppConfig struct {
+	Config *viper.Viper
+}
+
+func NewAppConfig(config *viper.Viper) *AppConfig {
+	return &AppConfig{Config: config}
+}
+
+func (a *AppConfig) AppRun() {
+	conf := a.Config
 
 	secret := conf.GetString("security.jwt.key")
-	database.ConnectDb(conf)
+	config.InitDBConnection(conf)
 	// Echo instance
 	app := echo.New()
 

@@ -9,9 +9,9 @@ import (
 )
 
 func LOG(format string, a ...any) {
-	color.Set(color.FgGreen)
-	slog.Info(fmt.Sprintf(format, a...))
-	color.Unset()
+	green := color.New(color.FgGreen).SprintFunc()
+	msg := green(fmt.Sprintf(format, a...))
+	slog.Info(msg)
 }
 
 func LOG2(format string, a ...any) {

@@ -1,11 +1,10 @@
-package database
+package config
 
 import (
 	"log/slog"
 	"sync"
 	"time"
 
-	"postfixadmin/config"
 	"postfixadmin/util"
 
 	"github.com/spf13/viper"
@@ -19,6 +18,7 @@ type DBInstance struct {
 	initializer func() any
 	instance    any
 	once        sync.Once
+	Conf        *viper.Viper
 }
 
 var dbInstance *DBInstance
@@ -29,9 +29,9 @@ func (i *DBInstance) Instance() any {
 	return i.instance
 }
 
-func dbInit(conf *viper.Viper) any {
-
-	DSN := config.GetMysqlDSN(conf)
+func (config *DBInstance) dbInit() any {
+	conf := config.Conf
+	DSN := GetMysqlDSN(conf)
 
 	maxIdleConns := conf.GetInt("mysql.max_idle_conns")
 	maxOpenConns := conf.GetInt("mysql.max_open_conns")
@@ -62,10 +62,11 @@ func DB() *gorm.DB {
 	return dbInstance.Instance().(*gorm.DB)
 }
 
-func ConnectDb(conf *viper.Viper) {
-	dbInstance = &DBInstance{initializer: func() any { return dbInit(conf) }}
+func InitDBConnection(conf *viper.Viper) {
+	config := &DBInstance{Conf: conf}
+	dbInstance = &DBInstance{initializer: config.dbInit}
 	util.LOG("Database Initializer")
 
 	// Create Default Tables if not exists
-	CreateSchema(conf)
+	CreateSchema()
 }
