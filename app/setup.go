@@ -17,9 +17,9 @@ func InitConfigFile() {
 	filename := GetFileNameDate()
 	err := os.WriteFile(filename, configFile, 0644)
 	if err == nil {
-		log.LOG("Config file created %s", filename)
+		log.INFO("Config file created %s", filename)
 	} else {
-		log.LOG("Error creating config file %s", err.Error())
+		log.ERROR("Error creating config file %s", err.Error())
 	}
 }
 

@@ -18,7 +18,7 @@ var initCmd = &cobra.Command{
 	Short: "Create a new configuration file",
 	Long:  `Create a new configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		log.LOG("Create a new configuration file")
+		log.INFO("Create a new configuration file")
 		app.InitConfigFile()
 		os.Exit(0)
 	},

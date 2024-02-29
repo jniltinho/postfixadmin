@@ -1,7 +1,6 @@
 package config
 
 import (
-	"log/slog"
 	"postfixadmin/log"
 	"sync"
 	"time"
@@ -44,8 +43,7 @@ func (config *DBInstance) dbInit() any {
 
 	db, err := gorm.Open(mysql.Open(DSN), cfg)
 	if err != nil {
-		//slog.Fatal("Cannot connect to database", zap.Error(err))
-		slog.Error("Cannot connect to database", err)
+		log.ERROR("Cannot connect to database %s", err.Error())
 	}
 
 	stdDB, _ := db.DB()
@@ -61,10 +59,20 @@ func DB() *gorm.DB {
 	return dbInstance.Instance().(*gorm.DB)
 }
 
+func CloseDBConnection() error {
+	sql, err := DB().DB()
+	if err != nil {
+		return err
+	}
+
+	sql.Close()
+	return nil
+}
+
 func InitDBConnection(conf *viper.Viper) {
 	config := &DBInstance{Conf: conf}
 	dbInstance = &DBInstance{initializer: config.dbInit}
-	log.LOG("Database Initializer")
+	log.INFO("Database Initializer")
 
 	// Create Default Tables if not exists
 	CreateSchema()
