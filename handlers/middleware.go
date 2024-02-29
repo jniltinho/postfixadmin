@@ -14,7 +14,7 @@ func WithAuth(next echo.HandlerFunc) echo.HandlerFunc {
 			return next(c)
 		}
 
-		log.DEBUG("Middleware WithAuth called %s", c.Request().URL.Path)
+		log.INFO("Middleware WithAuth called %s", c.Request().URL.Path)
 		return next(c)
 	}
 }
@@ -32,7 +32,7 @@ func CheckSession(next echo.HandlerFunc) echo.HandlerFunc {
 			return hxRedirect(c, GetRoutes["LoginUrl"])
 		}
 
-		log.DEBUG("User: %s is Authenticated Token: %s", sess.Values["username"], sess.Values["session_token"])
+		log.INFO("User: %s is Authenticated Token: %s", sess.Values["username"], sess.Values["session_token"])
 
 		return next(c)
 	}

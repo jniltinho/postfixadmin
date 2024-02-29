@@ -28,7 +28,7 @@ func LoginUser(c echo.Context) error {
 	ok := checkLogin(userData.Username, userData.Password)
 
 	if !ok {
-		log.DEBUG("Failed to authenticate user: %s", userData.Username)
+		log.INFO("Failed to authenticate user: %s", userData.Username)
 		//return c.Redirect(http.StatusUnauthorized, "/adm/login")
 		return hxRedirect(c, GetRoutes["LoginUrl"])
 	}
@@ -44,7 +44,7 @@ func LoginUser(c echo.Context) error {
 		Secure:   true,
 	}
 
-	log.DEBUG("User: %s is Authenticated Token: %s", userData.Username, sessionToken)
+	log.INFO("User: %s is Authenticated Token: %s", userData.Username, sessionToken)
 
 	sess.Values["session_token"] = sessionToken
 	sess.Values["username"] = userData.Username
