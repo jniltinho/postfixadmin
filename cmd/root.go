@@ -5,7 +5,7 @@ package cmd
 
 import (
 	"os"
-	"postfixadmin/util"
+	"postfixadmin/log"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -72,6 +72,6 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		util.LOG("Using config file: %s", viper.ConfigFileUsed())
+		log.LOG("Using config file: %s", viper.ConfigFileUsed())
 	}
 }

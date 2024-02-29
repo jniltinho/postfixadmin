@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"postfixadmin/util"
+	"postfixadmin/log"
 	"strings"
 
 	"github.com/labstack/echo-contrib/session"
@@ -14,7 +14,7 @@ func WithAuth(next echo.HandlerFunc) echo.HandlerFunc {
 			return next(c)
 		}
 
-		util.LOG("Middleware WithAuth called %s", c.Request().URL.Path)
+		log.LOG("Middleware WithAuth called %s", c.Request().URL.Path)
 		return next(c)
 	}
 }
@@ -32,7 +32,7 @@ func CheckSession(next echo.HandlerFunc) echo.HandlerFunc {
 			return hxRedirect(c, GetRoutes["LoginUrl"])
 		}
 
-		util.LOG("User: %s is Authenticated Token: %s", sess.Values["username"], sess.Values["session_token"])
+		log.LOG("User: %s is Authenticated Token: %s", sess.Values["username"], sess.Values["session_token"])
 
 		return next(c)
 	}

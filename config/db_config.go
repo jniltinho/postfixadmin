@@ -2,10 +2,9 @@ package config
 
 import (
 	"log/slog"
+	"postfixadmin/log"
 	"sync"
 	"time"
-
-	"postfixadmin/util"
 
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
@@ -65,7 +64,7 @@ func DB() *gorm.DB {
 func InitDBConnection(conf *viper.Viper) {
 	config := &DBInstance{Conf: conf}
 	dbInstance = &DBInstance{initializer: config.dbInit}
-	util.LOG("Database Initializer")
+	log.LOG("Database Initializer")
 
 	// Create Default Tables if not exists
 	CreateSchema()
