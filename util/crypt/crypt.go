@@ -1,6 +1,4 @@
-// Copyright 2013, Jonas mg
-// All rights reserved.
-//
+// (C) Copyright 2013, Jonas mg. All rights reserved.
 // Use of this source code is governed by a BSD-style license
 // that can be found in the LICENSE file.
 
@@ -52,16 +50,33 @@ type Crypter interface {
 type Crypt uint
 
 const (
-	APR1   Crypt = iota + 1 // import "github.com/tredoe/osutil/v2/user/crypt/apr1_crypt"
-	MD5                     // import "github.com/tredoe/osutil/v2/user/crypt/md5_crypt"
-	SHA256                  // import "github.com/tredoe/osutil/v2/user/crypt/sha256_crypt"
-	SHA512                  // import "github.com/tredoe/osutil/v2/user/crypt/sha512_crypt"
+	APR1   Crypt = 1 + iota // import github.com/GehirnInc/crypt/apr1_crypt
+	MD5                     // import github.com/GehirnInc/crypt/md5_crypt
+	SHA256                  // import github.com/GehirnInc/crypt/sha256_crypt
+	SHA512                  // import github.com/GehirnInc/crypt/sha512_crypt
 	maxCrypt
 )
 
-var cryptPrefixes = make([]string, maxCrypt)
-
 var crypts = make([]func() Crypter, maxCrypt)
+
+// New returns new Crypter making the Crypt c.
+// New panics if the Crypt c is unavailable.
+func (c Crypt) New() Crypter {
+	if c > 0 && c < maxCrypt {
+		f := crypts[c]
+		if f != nil {
+			return f()
+		}
+	}
+	panic("crypt: requested crypt function is unavailable")
+}
+
+// Available reports whether the Crypt c is available.
+func (c Crypt) Available() bool {
+	return c > 0 && c < maxCrypt && crypts[c] != nil
+}
+
+var cryptPrefixes = make([]string, maxCrypt)
 
 // RegisterCrypt registers a function that returns a new instance of the given
 // crypt function. This is intended to be called from the init function in
@@ -76,33 +91,31 @@ func RegisterCrypt(c Crypt, f func() Crypter, prefix string) {
 
 // New returns a new crypter.
 func New(c Crypt) Crypter {
-	f := crypts[c]
-	if f != nil {
-		return f()
+	return c.New()
+}
+
+// IsHashSupported returns true if hashedKey has a supported prefix.
+// NewFromHash will not panic for this hashedKey
+func IsHashSupported(hashedKey string) bool {
+	for i := range cryptPrefixes {
+		prefix := cryptPrefixes[i]
+		if crypts[i] != nil && strings.HasPrefix(hashedKey, prefix) {
+			return true
+		}
 	}
-	panic("crypt: requested crypt function is unavailable")
+
+	return false
 }
 
 // NewFromHash returns a new Crypter using the prefix in the given hashed key.
 func NewFromHash(hashedKey string) Crypter {
-	var f func() Crypter
-
-	if strings.HasPrefix(hashedKey, cryptPrefixes[SHA512]) {
-		f = crypts[SHA512]
-	} else if strings.HasPrefix(hashedKey, cryptPrefixes[SHA256]) {
-		f = crypts[SHA256]
-	} else if strings.HasPrefix(hashedKey, cryptPrefixes[MD5]) {
-		f = crypts[MD5]
-	} else if strings.HasPrefix(hashedKey, cryptPrefixes[APR1]) {
-		f = crypts[APR1]
-	} else {
-		toks := strings.SplitN(hashedKey, "$", 3)
-		prefix := "$" + toks[1] + "$"
-		panic("crypt: unknown cryp function from prefix: " + prefix)
+	for i := range cryptPrefixes {
+		prefix := cryptPrefixes[i]
+		if crypts[i] != nil && strings.HasPrefix(hashedKey, prefix) {
+			crypt := Crypt(uint(i))
+			return crypt.New()
+		}
 	}
 
-	if f != nil {
-		return f()
-	}
-	panic("crypt: requested cryp function is unavailable")
+	panic("crypt: unknown crypt function")
 }

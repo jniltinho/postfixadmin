@@ -1,9 +1,6 @@
-// Copyright 2012, Jeramey Crawford <jeramey@antihe.ro>
-// Copyright 2013, Jonas mg
-// All rights reserved.
-//
-// Use of this source code is governed by a BSD-style license
-// that can be found in the LICENSE file.
+// (C) Copyright 2012, Jeramey Crawford <jeramey@antihe.ro>. All
+// rights reserved. Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
 
 // Package md5_crypt implements the standard Unix MD5-crypt algorithm created by
 // Poul-Henning Kamp for FreeBSD.
@@ -12,9 +9,11 @@ package md5_crypt
 import (
 	"bytes"
 	"crypto/md5"
+	"crypto/subtle"
 
 	"postfixadmin/util/crypt"
 	"postfixadmin/util/crypt/common"
+	"postfixadmin/util/crypt/internal"
 )
 
 func init() {
@@ -34,111 +33,98 @@ type crypter struct{ Salt common.Salt }
 
 // New returns a new crypt.Crypter computing the MD5-crypt password hashing.
 func New() crypt.Crypter {
-	return &crypter{GetSalt()}
+	return &crypter{
+		common.Salt{
+			MagicPrefix:   []byte(MagicPrefix),
+			SaltLenMin:    SaltLenMin,
+			SaltLenMax:    SaltLenMax,
+			RoundsDefault: RoundsDefault,
+		},
+	}
 }
 
-func (c *crypter) Generate(key, salt []byte) (string, error) {
+func (c *crypter) Generate(key, salt []byte) (result string, err error) {
 	if len(salt) == 0 {
 		salt = c.Salt.Generate(SaltLenMax)
 	}
-	if !bytes.HasPrefix(salt, c.Salt.MagicPrefix) {
-		return "", common.ErrSaltPrefix
+	salt, _, _, _, err = c.Salt.Decode(salt)
+	if err != nil {
+		return
 	}
 
-	saltToks := bytes.Split(salt, []byte{'$'})
+	keyLen := len(key)
+	h := md5.New()
 
-	if len(saltToks) < 3 {
-		return "", common.ErrSaltFormat
-	} else {
-		salt = saltToks[2]
-	}
-	if len(salt) > 8 {
-		salt = salt[0:8]
-	}
+	// Compute sumB
+	h.Write(key)
+	h.Write(salt)
+	h.Write(key)
+	sumB := h.Sum(nil)
 
-	// Compute alternate MD5 sum with input KEY, SALT, and KEY.
-	Alternate := md5.New()
-	Alternate.Write(key)
-	Alternate.Write(salt)
-	Alternate.Write(key)
-	AlternateSum := Alternate.Sum(nil) // 16 bytes
-
-	A := md5.New()
-	A.Write(key)
-	A.Write(c.Salt.MagicPrefix)
-	A.Write(salt)
-	// Add for any character in the key one byte of the alternate sum.
-	i := len(key)
-	for ; i > 16; i -= 16 {
-		A.Write(AlternateSum)
-	}
-	A.Write(AlternateSum[0:i])
-
+	// Compute sumA
+	h.Reset()
+	h.Write(key)
+	h.Write(c.Salt.MagicPrefix)
+	h.Write(salt)
+	h.Write(internal.RepeatByteSequence(sumB, keyLen))
 	// The original implementation now does something weird:
 	//   For every 1 bit in the key, the first 0 is added to the buffer
 	//   For every 0 bit, the first character of the key
 	// This does not seem to be what was intended but we have to follow this to
 	// be compatible.
-	for i = len(key); i > 0; i >>= 1 {
-		if (i & 1) == 0 {
-			A.Write(key[0:1])
+	for i := keyLen; i > 0; i >>= 1 {
+		if i%2 == 0 {
+			h.Write(key[0:1])
 		} else {
-			A.Write([]byte{0})
+			h.Write([]byte{0})
 		}
 	}
-	Csum := A.Sum(nil)
+	sumA := h.Sum(nil)
+	internal.CleanSensitiveData(sumB)
 
 	// In fear of password crackers here comes a quite long loop which just
 	// processes the output of the previous round again.
 	// We cannot ignore this here.
-	for i = 0; i < RoundsDefault; i++ {
-		C := md5.New()
+	for i := 0; i < RoundsDefault; i++ {
+		h.Reset()
 
 		// Add key or last result.
-		if (i & 1) != 0 {
-			C.Write(key)
+		if i%2 != 0 {
+			h.Write(key)
 		} else {
-			C.Write(Csum)
+			h.Write(sumA)
 		}
 		// Add salt for numbers not divisible by 3.
-		if (i % 3) != 0 {
-			C.Write(salt)
+		if i%3 != 0 {
+			h.Write(salt)
 		}
 		// Add key for numbers not divisible by 7.
-		if (i % 7) != 0 {
-			C.Write(key)
+		if i%7 != 0 {
+			h.Write(key)
 		}
 		// Add key or last result.
-		if (i & 1) == 0 {
-			C.Write(key)
+		if i&1 != 0 {
+			h.Write(sumA)
 		} else {
-			C.Write(Csum)
+			h.Write(key)
 		}
-
-		Csum = C.Sum(nil)
+		copy(sumA, h.Sum(nil))
 	}
 
-	out := make([]byte, 0, 23+len(c.Salt.MagicPrefix)+len(salt))
-	out = append(out, c.Salt.MagicPrefix...)
-	out = append(out, salt...)
-	out = append(out, '$')
-	out = append(out, common.Base64_24Bit([]byte{
-		Csum[12], Csum[6], Csum[0],
-		Csum[13], Csum[7], Csum[1],
-		Csum[14], Csum[8], Csum[2],
-		Csum[15], Csum[9], Csum[3],
-		Csum[5], Csum[10], Csum[4],
-		Csum[11],
-	})...)
-
-	// Clean sensitive data.
-	A.Reset()
-	Alternate.Reset()
-	for i = 0; i < len(AlternateSum); i++ {
-		AlternateSum[i] = 0
-	}
-
-	return string(out), nil
+	buf := bytes.Buffer{}
+	buf.Grow(len(c.Salt.MagicPrefix) + len(salt) + 1 + 22)
+	buf.Write(c.Salt.MagicPrefix)
+	buf.Write(salt)
+	buf.WriteByte('$')
+	buf.Write(common.Base64_24Bit([]byte{
+		sumA[12], sumA[6], sumA[0],
+		sumA[13], sumA[7], sumA[1],
+		sumA[14], sumA[8], sumA[2],
+		sumA[15], sumA[9], sumA[3],
+		sumA[5], sumA[10], sumA[4],
+		sumA[11],
+	}))
+	return buf.String(), nil
 }
 
 func (c *crypter) Verify(hashedKey string, key []byte) error {
@@ -146,7 +132,7 @@ func (c *crypter) Verify(hashedKey string, key []byte) error {
 	if err != nil {
 		return err
 	}
-	if newHash != hashedKey {
+	if subtle.ConstantTimeCompare([]byte(newHash), []byte(hashedKey)) != 1 {
 		return crypt.ErrKeyMismatch
 	}
 	return nil
@@ -155,12 +141,3 @@ func (c *crypter) Verify(hashedKey string, key []byte) error {
 func (c *crypter) Cost(hashedKey string) (int, error) { return RoundsDefault, nil }
 
 func (c *crypter) SetSalt(salt common.Salt) { c.Salt = salt }
-
-func GetSalt() common.Salt {
-	return common.Salt{
-		MagicPrefix:   []byte(MagicPrefix),
-		SaltLenMin:    SaltLenMin,
-		SaltLenMax:    SaltLenMax,
-		RoundsDefault: RoundsDefault,
-	}
-}

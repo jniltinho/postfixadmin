@@ -5,13 +5,14 @@ import (
 	"math/rand"
 	"time"
 
-	"postfixadmin/util/crypt/md5_crypt"
+	"postfixadmin/util/crypt"
+	_ "postfixadmin/util/crypt/md5_crypt"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 func GeneratePass(password string) string {
-	c := md5_crypt.New()
+	c := crypt.MD5.New()
 	hash, err := c.Generate([]byte(password), getSalt())
 	if err != nil {
 		panic(err)
@@ -20,7 +21,7 @@ func GeneratePass(password string) string {
 }
 
 func ComparePass(hashedPassword, password string) bool {
-	c := md5_crypt.New()
+	c := crypt.MD5.New()
 	err := c.Verify(hashedPassword, []byte(password))
 	//fmt.Println(err)
 	return err == nil

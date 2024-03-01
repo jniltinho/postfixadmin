@@ -8,6 +8,7 @@
 *.so
 *.dylib
 *_templ.go
+*.idea
 bin
 tmp
 postfixadmin
