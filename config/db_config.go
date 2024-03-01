@@ -59,14 +59,9 @@ func DB() *gorm.DB {
 	return dbInstance.Instance().(*gorm.DB)
 }
 
-func CloseDBConnection() error {
-	sql, err := DB().DB()
-	if err != nil {
-		return err
-	}
-
+func CloseDBConnection() {
+	sql, _ := DB().DB()
 	sql.Close()
-	return nil
 }
 
 func InitDBConnection(conf *viper.Viper) {
