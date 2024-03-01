@@ -1,7 +1,6 @@
 package app
 
 import (
-	"net/http"
 	"postfixadmin/handlers"
 
 	"github.com/gorilla/sessions"
@@ -9,8 +8,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
-
-var staticFS = echo.WrapHandler(http.FileServer(http.FS(FS)))
 
 func (a *AppConfig) Routes() {
 	app := a.App
@@ -22,7 +19,8 @@ func (a *AppConfig) Routes() {
 	//app.Use(handlers.WithAuth)
 	app.Use(handlers.CheckSession)
 	app.Use(middleware.Recover())
-	app.GET("/static/*", staticFS)
+	staticFS := echo.MustSubFS(FS, "static")
+	app.StaticFS("/static", staticFS)
 
 	// Routes
 	app.GET("/", handlers.Home)
