@@ -9,10 +9,9 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func (a *AppConfig) Routes() {
-	app := a.App
-	secret := a.Secret
-	app.Use(session.Middleware(sessions.NewCookieStore([]byte(secret))))
+func (r *AppConfig) runRoutes() {
+	app := r.Echo
+	app.Use(session.Middleware(sessions.NewCookieStore([]byte(r.Secret))))
 
 	app.Use(middleware.Logger())
 	app.Use(middleware.Recover())

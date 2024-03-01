@@ -20,7 +20,7 @@ var serveCmd = &cobra.Command{
 		//configFile, _ := rootCmd.Flags().GetString("config")
 		//println("Config file:", configFile)
 
-		app := app.NewAppConfig(viper.GetViper())
+		app := app.NewApp(viper.GetViper())
 		app.AppRun()
 
 		//app.AppRun(viper.GetViper())
