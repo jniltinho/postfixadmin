@@ -12,7 +12,7 @@ get:
 	@go mod tidy
 
 generate:
-	npx tailwindcss -i view/css/app.css -o app/static/styles.css
+	npx tailwindcss -i view/css/app.css -o public/static/styles.css
 	@templ generate view
 
 

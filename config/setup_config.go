@@ -1,7 +1,7 @@
-package app
+package config
 
 import (
-	"embed"
+	_ "embed"
 	"os"
 	"postfixadmin/log"
 	"time"
@@ -9,9 +9,6 @@ import (
 
 //go:embed scripts/local.toml
 var configFile []byte
-
-//go:embed static/*
-var FS embed.FS
 
 func InitConfigFile() {
 	filename := GetFileNameDate()

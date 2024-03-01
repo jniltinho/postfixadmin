@@ -2,10 +2,10 @@ package app
 
 import (
 	"postfixadmin/handlers"
+	web "postfixadmin/public"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
-	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
@@ -18,8 +18,9 @@ func (r *AppConfig) runRoutes() {
 	//app.Use(handlers.WithAuth)
 	app.Use(handlers.CheckSession)
 	app.Use(middleware.Recover())
-	staticFS := echo.MustSubFS(FS, "static")
-	app.StaticFS("/static", staticFS)
+
+	// Static files
+	web.StaticFiles(app)
 
 	// Routes
 	app.GET("/", handlers.Home)
