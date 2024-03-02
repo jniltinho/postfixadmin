@@ -100,7 +100,7 @@ templ DomainForm(m Messages) {
 					<div>
 						<input class="btn btn-outline hover:bg-blue-700 w-full mb-2" type="submit" name="submit" value="Add Domain"/>
 						if m.Alert != "" {
-							<div id="alert" role="alert" class={ alert[m.Alert] }>
+							<div id="malert" role="alert" class={ alert[m.Alert] }>
 								<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 								<span>{ m.Message }</span>
 							</div>
@@ -115,6 +115,6 @@ templ DomainForm(m Messages) {
 
 templ CallbackScript() {
 	<script>
-	$('#alert').delay(5000).hide(300);
+	$('#malert').delay(5000).fadeOut('slow');
 	</script>
 }
