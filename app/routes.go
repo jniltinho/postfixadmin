@@ -28,6 +28,8 @@ func (r *AppConfig) runRoutes() {
 	app.GET("/home2", handlers.HomeOld)
 
 	app.GET("/ListDomain", handlers.ListDomain)
+	app.GET("/AddDomain", handlers.AddDomain)
+	app.POST("/AddDomain", handlers.CreateDomain)
 	//app.GET("/login", handlers.LoginOld)
 	//app.GET("/logout", handlers.LogoutUser)
 

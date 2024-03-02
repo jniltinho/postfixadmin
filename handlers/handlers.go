@@ -26,3 +26,7 @@ func Login(c echo.Context) error {
 func ListDomain(c echo.Context) error {
 	return Render(c, http.StatusOK, view.ListDomain())
 }
+
+func AddDomain(c echo.Context) error {
+	return Render(c, http.StatusOK, view.AddDomain())
+}
