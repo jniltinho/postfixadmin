@@ -15,7 +15,7 @@ var alert = map[string]string{
 templ AddDomain() {
 	@layout.BASEOLD() {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
-			<div class="max-w-2xl w-full border border-slate-600 shadow-xl py-6 px-3">
+			<div class="max-w-xl w-full border border-slate-600 shadow-xl py-6 px-3">
 				@DomainForm(Messages{})
 			</div>
 		</div>
@@ -57,33 +57,35 @@ templ DomainForm(m Messages) {
 					</div>
 				</div>
 			</div>
-			<div class="flex items-center space-y-1 gap-2">
-				<label>Mail server is backup MX</label>
-				<div>
+			<div class="flex justify-evenly gap-3">
+				<div class="flex items-start gap-1">
+					<label>Mail server is backup MX</label>
 					<div>
-						<label>
-							<input type="checkbox" value="1" name="backupmx" class="checkbox checkbox-xs"/>
-						</label>
+						<div>
+							<label>
+								<input type="checkbox" value="1" name="backupmx" class="checkbox checkbox-md"/>
+							</label>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="flex items-center space-y-1 gap-2">
-				<label>Active</label>
-				<div>
+				<div class="flex items-start gap-1">
+					<label>Active</label>
 					<div>
-						<label>
-							<input type="checkbox" value="1" name="active" checked="checked" class="checkbox checkbox-xs"/>
-						</label>
+						<div>
+							<label>
+								<input type="checkbox" value="1" name="active" checked="checked" class="checkbox checkbox-md"/>
+							</label>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="flex items-center space-y-1 gap-2">
-				<label>Add default mail aliases</label>
-				<div>
+				<div class="flex items-start gap-1">
+					<label>Add default mail aliases</label>
 					<div>
-						<label>
-							<input type="checkbox" value="1" name="default_aliases" checked="checked" class="checkbox checkbox-xs"/>
-						</label>
+						<div>
+							<label>
+								<input type="checkbox" value="1" name="default_aliases" checked="checked" class="checkbox checkbox-md"/>
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>

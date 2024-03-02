@@ -2094,9 +2094,9 @@ details.collapse summary::-webkit-details-marker {
   padding: 0px;
 }
 
-[type="checkbox"].checkbox-xs {
-  height: 1rem;
-  width: 1rem;
+[type="checkbox"].checkbox-md {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 .input-sm {
@@ -2287,12 +2287,12 @@ details.collapse summary::-webkit-details-marker {
   width: 100%;
 }
 
-.max-w-2xl {
-  max-width: 42rem;
-}
-
 .max-w-md {
   max-width: 28rem;
+}
+
+.max-w-xl {
+  max-width: 36rem;
 }
 
 .shrink-0 {
@@ -2303,6 +2303,10 @@ details.collapse summary::-webkit-details-marker {
   flex-direction: column;
 }
 
+.items-start {
+  align-items: flex-start;
+}
+
 .items-center {
   align-items: center;
 }
@@ -2311,8 +2315,16 @@ details.collapse summary::-webkit-details-marker {
   justify-content: center;
 }
 
-.gap-2 {
-  gap: 0.5rem;
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
 }
 
 .-space-y-2 > :not([hidden]) ~ :not([hidden]) {
@@ -2331,12 +2343,6 @@ details.collapse summary::-webkit-details-marker {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.125rem * var(--tw-space-x-reverse));
   margin-left: calc(0.125rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-y-1 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
