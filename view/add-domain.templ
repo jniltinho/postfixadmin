@@ -108,10 +108,10 @@ templ DomainForm(m Messages) {
 						<span>{ m.Message }</span>
 					</div>
 				</div>
+				@CallbackScript()
 			}
 		</div>
 	</form>
-	@CallbackScript()
 }
 
 templ CallbackScript() {

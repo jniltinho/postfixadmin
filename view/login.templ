@@ -70,8 +70,8 @@ templ Login(loginURL string) {
 	@layout.App(false) {
 		@ui.NavbarLogin()
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
-			<div class="max-w-md w-full bg-base-300 py-12 px-8 rounded-xl shadow-xl">
-				<h1 class="text-center text-xl font-black mb-5">Mail admins login here to administer your domain.</h1>
+			<div class="max-w-md w-full border border-slate-600 py-10 px-3 shadow-xl">
+				<h1 class="text-center text-xl font-black mt-0 mb-6">Mail admins login here to administer your domain.</h1>
 				@LoginForm(loginURL)
 			</div>
 		</div>
@@ -80,19 +80,23 @@ templ Login(loginURL string) {
 }
 
 templ LoginForm(loginURL string) {
-	<form hx-post={ loginURL } hx-swap="outerHTML" class="space-y-5">
-		<div class="w-full">
-			<div class="label">
+	<form hx-post={ loginURL } hx-swap="outerHTML">
+		<div class="w-full -space-y-2">
+			<div class="label px-0">
 				<span class="label-text font-bold">Login (email):</span>
 			</div>
-			<input type="text" name="username" autocomplete="off" required placeholder="" class="input input-bordered w-full"/>
+			<input type="text" name="username" autocomplete="off" required placeholder="" class="border border-slate-600 leading-tight input-md w-full"/>
 		</div>
-		<div class="w-full">
-			<div class="label">
+		<div class="w-full -space-y-2 py-4">
+			<div class="label px-0">
 				<span class="label-text font-black">Password:</span>
 			</div>
-			<input type="password" name="password" required autocomplete="off" placeholder="" class="input input-bordered w-full"/>
+			<input type="password" name="password" required autocomplete="off" placeholder="" class="border border-slate-600 leading-tight input-md w-full"/>
 		</div>
-		<button type="submit" class="btn btn-primary w-full font-black text-xl">Login <i class="fa-solid fa-arrow-right"></i></button>
+		<div class="mt-4">
+			<button type="submit" class="btn btn-outline hover:bg-blue-700 w-full">Login <i class="fa-solid fa-arrow-right"></i></button>
+		</div>
 	</form>
 }
+
+//btn btn-outline hover:bg-blue-700 w-full mb-2
