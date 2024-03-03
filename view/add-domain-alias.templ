@@ -1,0 +1,71 @@
+
+package view
+
+import "postfixadmin/view/layout"
+
+templ AddDomainAlias() {
+	@layout.BASEOLD() {
+		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
+			<div class="max-w-xl w-full border border-slate-600 shadow-xl py-6 px-3">
+				@DomainAliasForm()
+			</div>
+		</div>
+	}
+}
+
+templ DomainAliasForm() {
+	<form name="edit_aliasdomain" method="post" action="" class="form-horizontal">
+		<div id="edit_form" class="panel panel-default">
+			<div class="panel-heading"><h4>Mirror addresses of one of your domains to another.</h4></div>
+			<div class="panel-body enable-asterisk">
+				<input class="flat" type="hidden" name="table" value="aliasdomain"/>
+				<input class="flat" type="hidden" name="token" value="fd006216746813644a4b11cfceaadfe0"/>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="alias_domain">Alias Domain</label>
+					<div class="col-md-6 col-sm-8">
+						<select class="form-control" name="value[alias_domain]" id="alias_domain">
+							<option value="cursopostfix.net.br">cursopostfix.net.br</option>
+							<option value="linuxpro.com.br">linuxpro.com.br</option>
+							<option value="meudominio.com">meudominio.com</option>
+						</select>
+						<span class="help-block">The domain that mails come in for.</span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="target_domain">Target Domain</label>
+					<div class="col-md-6 col-sm-8">
+						<select class="form-control" name="value[target_domain]" id="target_domain">
+							<option value="cursopostfix.net.br">cursopostfix.net.br</option>
+							<option value="linuxpro.com.br">linuxpro.com.br</option>
+							<option value="meudominio.com">meudominio.com</option>
+						</select>
+						<span class="help-block">The domain where mails should go to.</span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="active">Active</label>
+					<div class="col-md-6 col-sm-8">
+						<div class="checkbox">
+							<label>
+								<input
+									type="checkbox"
+									value="1"
+									name="value[active]"
+									checked="checked"
+								/>
+							</label>
+						</div>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<div class="btn-toolbar" role="toolbar">
+					<div class="btn-group pull-right">
+						<input class="btn btn-primary" type="submit" name="submit" value="Add Alias Domain"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+}

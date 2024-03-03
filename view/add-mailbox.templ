@@ -1,0 +1,139 @@
+
+package view
+
+import "postfixadmin/view/layout"
+
+templ AddMailbox() {
+	@layout.BASEOLD() {
+		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
+			<div class="max-w-xl w-full border border-slate-600 shadow-xl py-6 px-3">
+				@MailboxForm()
+			</div>
+		</div>
+	}
+}
+
+//<div class="flex flex-col space-y-2 py-2 px-4">
+templ MailboxForm() {
+	<form name="edit_mailbox" method="post" action="" class="form-horizontal">
+		<div id="edit_form" class="panel panel-default">
+			<div class="panel-heading"><h4>Create a new mailbox for your domain.</h4></div>
+			<div class="panel-body enable-asterisk">
+				<input class="flat" type="hidden" name="table" value="mailbox"/>
+				<input class="flat" type="hidden" name="token" value="fd006216746813644a4b11cfceaadfe0"/>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="local_part">Username</label>
+					<div class="col-md-6 col-sm-8">
+						<input
+							class="form-control"
+							type="text"
+							name="value[local_part]"
+							value=""
+						/>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="domain"></label>
+					<div class="col-md-6 col-sm-8">
+						<select class="form-control" name="value[domain]" id="domain">
+							<option value="cursopostfix.net.br" selected="selected">cursopostfix.net.br</option>
+							<option value="linuxpro.com.br">linuxpro.com.br</option>
+							<option value="meudominio.com">meudominio.com</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="password">Password</label>
+					<div class="col-md-6 col-sm-8">
+						<input class="form-control" type="password" name="value[password]" autocomplete="new-password"/>
+						<span class="help-block">Password for POP3/IMAP</span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="password2">Password (again)</label>
+					<div class="col-md-6 col-sm-8">
+						<input class="form-control" type="password" name="value[password2]" autocomplete="new-password"/>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="name">Name</label>
+					<div class="col-md-6 col-sm-8">
+						<input
+							class="form-control"
+							type="text"
+							name="value[name]"
+							value=""
+						/>
+						<span class="help-block">Full name</span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="quota">Quota</label>
+					<div class="col-md-6 col-sm-8">
+						<input
+							class="form-control"
+							type="text"
+							name="value[quota]"
+							value=""
+						/>
+						<span class="help-block">MB</span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="active">Active</label>
+					<div class="col-md-6 col-sm-8">
+						<div class="checkbox">
+							<label>
+								<input
+									type="checkbox"
+									value="1"
+									name="value[active]"
+									checked="checked"
+								/>
+							</label>
+						</div>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="welcome_mail">Send Welcome mail</label>
+					<div class="col-md-6 col-sm-8">
+						<div class="checkbox">
+							<label>
+								<input
+									type="checkbox"
+									value="1"
+									name="value[welcome_mail]"
+									checked="checked"
+								/>
+							</label>
+						</div>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-md-4 col-sm-4 control-label" for="email_other">Other e-mail</label>
+					<div class="col-md-6 col-sm-8">
+						<input
+							class="form-control"
+							type="text"
+							name="value[email_other]"
+							value=""
+						/>
+						<span class="help-block">Used if the password is forgotten</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<div class="btn-toolbar" role="toolbar">
+					<div class="btn-group pull-right">
+						<input class="btn btn-primary" type="submit" name="submit" value="Add Mailbox"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+}
