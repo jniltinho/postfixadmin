@@ -5,11 +5,11 @@ import "postfixadmin/view/layout"
 templ ListDomain() {
 	@layout.BASEOLD() {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
-			<div class="border border-slate-600 shadow-xl">
+			<div class="border border-slate-600 shadow shadow-current">
 				<table class="table table-zebra">
 					<!-- TODO: 'admin_table' needed because of CSS for table header -->
 					<thead>
-						<tr class="border border-slate-600">
+						<tr class="border-b border-slate-600">
 							<th>Domain</th>
 							<th>Description</th>
 							<th>Aliases</th>
@@ -22,7 +22,7 @@ templ ListDomain() {
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
-					<tr class="border border-slate-600">
+					<tr class="border-b border-slate-600">
 						<td>
 							<a>cursopostfix.net.br</a>
 						</td>
@@ -57,7 +57,7 @@ templ ListDomain() {
 							</form>
 						</td>
 					</tr>
-					<tr class="border border-slate-600">
+					<tr class="border-b border-slate-600">
 						<td>
 							<a>linuxpro.com.br</a>
 						</td>
@@ -94,7 +94,7 @@ templ ListDomain() {
 							</form>
 						</td>
 					</tr>
-					<tr class="border border-slate-600">
+					<tr class="border-b border-slate-600">
 						<td>
 							<a>meudominio.com</a>
 						</td>
@@ -130,12 +130,8 @@ templ ListDomain() {
 						</td>
 					</tr>
 				</table>
-				<div class="panel-footer">
-					<div class="btn-toolbar" role="toolbar">
-						<div class="btn-group pull-right">
-							<a href="/AddDomain" class="btn btn-outline hover:bg-blue-700 w-full">Add New Domain</a>
-						</div>
-					</div>
+				<div class="">
+					<a href="/AddDomain" class="border-none btn btn-outline hover:bg-blue-700 w-full">Add New Domain</a>
 				</div>
 			</div>
 		</div>

@@ -70,7 +70,7 @@ templ Login(loginURL string) {
 	@layout.App(false) {
 		@ui.NavbarLogin()
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
-			<div class="max-w-md w-full border border-slate-600 py-10 px-3 shadow-xl">
+			<div class="max-w-md w-full border border-slate-600 py-10 px-3 shadow shadow-current">
 				<h1 class="text-center text-xl font-black mt-0 mb-6">Mail admins login here to administer your domain.</h1>
 				@LoginForm(loginURL)
 			</div>

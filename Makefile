@@ -5,19 +5,18 @@ GOGET = $(GOCMD) get
 BINARY_NAME = postfixadmin
 
 
-default: get format generate build
+default: get tailwind templ build
 
 
 get:
 	@go mod tidy
 
-generate:
+tailwind:
 	npx tailwindcss -i view/css/app.css -o public/static/styles.css
-	@templ generate view
 
-
-format:
+templ:
 	@templ fmt view
+	@templ generate view
 
 build:
 	CGO_ENABLED=0 $(GOBUILD) -o $(BINARY_NAME) -v -ldflags="-s -w"

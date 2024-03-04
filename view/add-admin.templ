@@ -6,13 +6,14 @@ import "postfixadmin/view/layout"
 templ AddNewAdmin() {
 	@layout.BASEOLD() {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
-			<div class="max-w-xl w-full border border-slate-600 shadow-xl py-6 px-3">
+			<div class="max-w-xl w-full border border-slate-600 py-6 px-3 shadow shadow-current">
 				@NewAdminForm()
 			</div>
 		</div>
 	}
 }
 
+//Teste Nilton
 templ NewAdminForm() {
 	<form name="edit_admin" method="post" action="" class="form-horizontal">
 		<div id="edit_form" class="panel panel-default">
