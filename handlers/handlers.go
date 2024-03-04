@@ -9,11 +9,6 @@ import (
 
 // Home is the handler for the home page
 func Home(c echo.Context) error {
-	return Render(c, http.StatusOK, view.HomeNew())
-}
-
-// Home is the handler for the home page
-func HomeOld(c echo.Context) error {
 	return Render(c, http.StatusOK, view.Home())
 }
 

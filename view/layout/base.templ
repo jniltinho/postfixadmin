@@ -2,36 +2,7 @@ package layout
 
 import "postfixadmin/view/ui"
 
-templ header(title string) {
-	<head><title>{ title }</title></head>
-}
-
-templ content(title string, body templ.Component) {
-	<body>
-		<h1>{ title }</h1>
-		<div class="content">
-			@body
-		</div>
-	</body>
-}
-
-templ contentPage(title string, body templ.Component) {
-	<html>
-		@header(title)
-		@content(title, body)
-	</html>
-}
-
-templ Base(title string) {
-	<html>
-		@header(title)
-		<body>
-			{ children... }
-		</body>
-	</html>
-}
-
-templ BASEOLD() {
+templ BASE() {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -54,7 +25,7 @@ templ BASEOLD() {
 	</html>
 }
 
-templ BASE() {
+templ BASEOLD() {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>

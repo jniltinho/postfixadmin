@@ -25,7 +25,6 @@ func (r *AppConfig) runRoutes() {
 	// Routes
 	app.GET("/", handlers.Home)
 	app.GET("/home", handlers.Home)
-	app.GET("/home2", handlers.HomeOld)
 
 	app.GET("/ListDomain", handlers.ListDomain)
 	app.GET("/AddDomain", handlers.AddDomain)
