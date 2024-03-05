@@ -1,52 +1,67 @@
 package view
 
 import "postfixadmin/view/layout"
+import "postfixadmin/model"
+import "fmt"
 
-templ ListDomain() {
+templ ListDomain(domains []model.Domain) {
 	@layout.BASE() {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
 			<div class="border border-slate-600 shadow shadow-current">
 				<table class="table table-zebra">
-					<!-- TODO: 'admin_table' needed because of CSS for table header -->
 					<thead>
 						<tr class="border-b border-slate-600">
 							<th>Domain</th>
 							<th>Description</th>
 							<th>Aliases</th>
 							<th>Mailboxes</th>
-							<th>Mail server is backup MX</th>
+							<th>BackupMX</th>
 							<th>Active</th>
-							<th>Last modified</th>
-							<th>Pass expires</th>
+							<th>LastModified</th>
+							<th>PassExpires</th>
 							<th>&nbsp;</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
+					for _, d := range domains {
+						<tr class="border-b border-slate-600">
+							<td><a>{ d.Domain }</a></td>
+							<td>{ d.Description }</td>
+							<td><div>{ fmt.Sprintf("%d", d.Aliases) } / 100</div></td>
+							<td><div>0 / 100</div></td>
+							if d.Backupmx {
+								<td>YES</td>
+							} else {
+								<td>NO</td>
+							}
+							if d.Active {
+								<td><a class="btn btn-outline bg-green-500 hover:bg-green-700 btn-sm" href="#">YES</a></td>
+							} else {
+								<td><a class="btn btn-outline bg-red-500 hover:bg-red-700 btn-sm" href="#">NO</a></td>
+							}
+							<td>{ d.Modified.Format("2006-01-02") }</td>
+							<td>{ fmt.Sprintf("%d", d.PasswordExpiry) }</td>
+							<td>
+								<a class="btn btn-outline hover:bg-blue-700 btn-sm" href={ templ.URL(fmt.Sprintf("/EditDomain/%s", d.Domain)) }>Edit</a>
+							</td>
+							<td>
+								<form method="post" action="/DelDomain">
+									<input type="hidden" name="delete" value={ d.Domain }/>
+									<button class="btn btn-outline bg-red-400 hover:bg-red-700 btn-sm">Del</button>
+								</form>
+							</td>
+						</tr>
+					}
+					<!--
 					<tr class="border-b border-slate-600">
-						<td>
-							<a>cursopostfix.net.br</a>
-						</td>
-						<td>
-							Curso Postfix
-						</td>
-						<td>
-							<div>4 / 100</div>
-						</td>
-						<td>
-							<div>0 / 100</div>
-						</td>
-						<td>
-							NO
-						</td>
-						<td>
-							<a class="btn btn-outline bg-green-500 hover:bg-green-700 btn-sm" href="#">YES</a>
-						</td>
-						<td>
-							2024-02-27
-						</td>
-						<td>
-							19000
-						</td>
+						<td><a>cursopostfix.net.br</a></td>
+						<td>Curso Postfix</td>
+						<td><div>4 / 100</div></td>
+						<td><div>0 / 100</div></td>
+						<td>NO</td>
+						<td><a class="btn btn-outline bg-green-500 hover:bg-green-700 btn-sm" href="#">YES</a></td>
+						<td>2024-02-27</td>
+						<td>19000</td>
 						<td>
 							<a class="btn btn-outline hover:bg-blue-700 btn-sm" href="/EditDomain/cursopostfix.net.br">Edit</a>
 						</td>
@@ -57,78 +72,7 @@ templ ListDomain() {
 							</form>
 						</td>
 					</tr>
-					<tr class="border-b border-slate-600">
-						<td>
-							<a>linuxpro.com.br</a>
-						</td>
-						<td>
-							Linuxpro
-						</td>
-						<td>
-							<div class="quota quota_low"></div>
-							<div class="quota_bg"></div>
-							<div class="quota_text quota_text_low">4 / 10</div>
-						</td>
-						<td>
-							<div class="quota_text quota_text_low">2 / 10</div>
-						</td>
-						<td>
-							NO
-						</td>
-						<td>
-							<a class="btn btn-outline bg-green-500 hover:bg-green-700 btn-sm" href="#">YES</a>
-						</td>
-						<td>
-							2024-02-27
-						</td>
-						<td>
-							365
-						</td>
-						<td>
-							<a class="btn btn-outline hover:bg-blue-700 btn-sm" href="/EditDomain/linuxpro.com.br">Edit</a>
-						</td>
-						<td>
-							<form method="post" action="/DelDomain">
-								<input type="hidden" name="delete" value="linuxpro.com.br"/>
-								<button class="btn btn-outline bg-red-400 hover:bg-red-700 btn-sm">Del</button>
-							</form>
-						</td>
-					</tr>
-					<tr class="border-b border-slate-600">
-						<td>
-							<a>meudominio.com</a>
-						</td>
-						<td>
-							meudominio.com
-						</td>
-						<td>
-							<div class="quota_text quota_text_low">4 / 10</div>
-						</td>
-						<td>
-							<div class="quota_text quota_text_low">0 / 10</div>
-						</td>
-						<td>
-							NO
-						</td>
-						<td>
-							<a class="btn btn-outline bg-green-500 hover:bg-green-700 btn-sm" href="#">YES</a>
-						</td>
-						<td>
-							2024-02-27
-						</td>
-						<td>
-							365
-						</td>
-						<td>
-							<a class="btn btn-outline hover:bg-blue-700 btn-sm" href="/EditDomain/meudominio.com">Edit</a>
-						</td>
-						<td>
-							<form method="post" action="DelDomain">
-								<input type="hidden" name="delete" value="meudominio.com"/>
-								<button class="btn btn-outline bg-red-400 hover:bg-red-700 btn-sm">Del</button>
-							</form>
-						</td>
-					</tr>
+					-->
 				</table>
 				<div class="">
 					<a href="/AddDomain" class="border-none btn btn-outline hover:bg-blue-700 w-full">Add New Domain</a>

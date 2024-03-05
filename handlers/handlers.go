@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"postfixadmin/model"
 	"postfixadmin/view"
 
 	"github.com/labstack/echo/v4"
@@ -19,7 +20,9 @@ func Login(c echo.Context) error {
 }
 
 func ListDomain(c echo.Context) error {
-	return Render(c, http.StatusOK, view.ListDomain())
+	d := new(model.Domain)
+	allDomains := d.ListDomains()
+	return Render(c, http.StatusOK, view.ListDomain(allDomains))
 }
 
 func AddDomain(c echo.Context) error {
