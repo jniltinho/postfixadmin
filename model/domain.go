@@ -41,3 +41,11 @@ func (m *Domain) ListDomains() []Domain {
 	config.DB().Where("domain != ?", "ALL").Order("domain").Find(&domains)
 	return domains
 }
+
+func (m *Domain) GetDomain(domain string) error {
+	return config.DB().Where("domain = ?", domain).First(m).Error
+}
+
+func (m *Domain) DeleteDomain(domain string) error {
+	return config.DB().Where("domain = ?", domain).Delete(m).Error
+}
