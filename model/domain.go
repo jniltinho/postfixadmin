@@ -49,3 +49,15 @@ func (m *Domain) GetDomain(domain string) error {
 func (m *Domain) DeleteDomain(domain string) error {
 	return config.DB().Where("domain = ?", domain).Delete(m).Error
 }
+
+func (m *Domain) DisableDomain() int64 {
+	return config.DB().Model(m).Where("domain = ?", m.Domain).Update("active", 0).RowsAffected
+}
+
+func (m *Domain) EnableDomain() int64 {
+	return config.DB().Model(m).Where("domain = ?", m.Domain).Update("active", 1).RowsAffected
+}
+
+func (m *Domain) UpdateDomain() error {
+	return config.DB().Where("domain = ?", m.Domain).Updates(m).Error
+}
