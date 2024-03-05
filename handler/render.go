@@ -1,11 +1,14 @@
-package handlers
+package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 )
+
+var FF = fmt.Sprintf
 
 var GetRoutes = map[string]string{
 	"HomeUrl":   "/",
@@ -13,7 +16,7 @@ var GetRoutes = map[string]string{
 	"LogoutUrl": "/adm/logout",
 }
 
-func render(c echo.Context, t templ.Component) error {
+func Render2(c echo.Context, t templ.Component) error {
 	return t.Render(c.Request().Context(), c.Response())
 }
 
