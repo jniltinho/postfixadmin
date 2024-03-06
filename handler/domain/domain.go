@@ -73,33 +73,32 @@ func NewDomain(c echo.Context) error {
 	return handler.Render(c, view.FlashMessage(message))
 }
 
-func DeleteDomain(c echo.Context) error {
-	domain := new(model.Domain)
-	domain.Domain = c.Param("domain")
+func DelDomain(c echo.Context) error {
+	d := new(model.Domain)
+	d.Domain = util.URLDecode(c.Param("domain"))
 
-	res := domain.DeleteDomain(domain.Domain)
+	res := d.DeleteDomain(d.Domain)
 	if res != nil {
 		message := view.Messages{Message: res.Error(), Alert: "error"}
-		list := domain.ListDomains()
+		list := d.ListDomains()
 		return handler.Render(c, view.ListDomainTable(list, message))
 	}
 
-	m := FF("Domain Deleted: %s", domain.Domain)
+	m := FF("Domain Deleted: %s", d.Domain)
 	message := view.Messages{Message: m, Alert: "warning"}
 
-	list := domain.ListDomains()
+	list := d.ListDomains()
 	return handler.Render(c, view.ListDomainTable(list, message))
 }
 
 func EditDomain(c echo.Context) error {
 	d := new(model.Domain)
-	domainDecode := util.URLDecode(c.Param("domain"))
-	d.Domain = domainDecode
+	d.Domain = util.URLDecode(c.Param("domain"))
 	d.GetDomain()
 	return handler.Render(c, view.EditDomain(d))
 }
 
-func UpdateDomain(c echo.Context) error {
+func PostEditDomain(c echo.Context) error {
 
 	dR := new(DomainRequest)
 	domain := new(model.Domain)

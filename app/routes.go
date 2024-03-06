@@ -30,10 +30,10 @@ func (r *AppConfig) runRoutes() {
 	// Domain routes
 	app.GET("/ListDomain", domain.ListDomain)
 	app.GET("/AddDomain", domain.FormNewDomain)
-	app.POST("/AddDomain", domain.NewDomain)
-	app.DELETE("/DelDomain/:domain", domain.DeleteDomain)
+	app.POST("/NewDomain", domain.NewDomain)
+	app.DELETE("/DelDomain/:domain", domain.DelDomain)
 	app.GET("/EditDomain/:domain", domain.EditDomain)
-	app.POST("/UpdateDomain", domain.UpdateDomain)
+	app.POST("/PostEditDomain", domain.PostEditDomain)
 	app.GET("/ActDomain/:domain/:active", domain.ActDomain)
 
 	adm := app.Group("/adm")

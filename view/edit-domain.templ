@@ -15,7 +15,7 @@ templ EditDomain(domain *model.Domain) {
 
 templ EditDomainForm(d *model.Domain, m Messages) {
 	<div id="editD">
-		<form hx-post="/UpdateDomain" hx-swap="afterend" hx-target="#editD">
+		<form hx-post="/PostEditDomain" hx-swap="afterend" hx-target="#editD">
 			<div class="text-center text-xl font-black mt-2"><h4>Edit domain</h4></div>
 			<div class="flex flex-col space-y-2">
 				<div>
