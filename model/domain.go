@@ -58,17 +58,16 @@ func (m *Domain) DeleteDomain(domain string) error {
 	return config.DB().Where("domain = ?", domain).Delete(m).Error
 }
 
-func (m *Domain) DisableDomain() int64 {
-	return config.DB().Model(m).Update("active", 0).RowsAffected
-}
-
-func (m *Domain) EnableDomain() int64 {
-	return config.DB().Model(m).Update("active", 1).RowsAffected
+func (m *Domain) ActiveDomain(active int) int64 {
+	// Active and Deactive domain
+	// 1 = Active, 0 = Deactive
+	return config.DB().Model(m).Update("active", active).RowsAffected
 }
 
 func (m *Domain) UpdateDomain() error {
-	if !m.Active {
-		return config.DB().Updates(m).Update("active", m.Active).Error
+	if !m.Active || !m.Backupmx {
+		param := map[string]interface{}{"active": m.Active, "backupmx": m.Backupmx}
+		config.DB().Model(m).Updates(param)
 	}
 	return config.DB().Updates(m).Error
 }

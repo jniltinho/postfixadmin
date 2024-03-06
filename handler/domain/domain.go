@@ -4,6 +4,7 @@ package domain
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"postfixadmin/handler"
@@ -141,10 +142,9 @@ func UpdateDomain(c echo.Context) error {
 func ActDomain(c echo.Context) error {
 	domain := new(model.Domain)
 	domain.Domain = util.URLDecode(c.Param("domain"))
-	if c.Param("active") == "1" {
-		domain.EnableDomain()
-	} else {
-		domain.DisableDomain()
+	if c.Param("active") == "1" || c.Param("active") == "0" {
+		active, _ := strconv.Atoi(c.Param("active"))
+		domain.ActiveDomain(active)
 	}
 	return handler.Redirect(c, "/ListDomain")
 }
