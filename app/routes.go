@@ -3,7 +3,7 @@ package app
 import (
 	"postfixadmin/handler"
 	"postfixadmin/handler/domain"
-	web "postfixadmin/public"
+	"postfixadmin/public"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
@@ -21,7 +21,7 @@ func (r *AppConfig) runRoutes() {
 	app.Use(middleware.Recover())
 
 	// Static files
-	web.StaticFiles(app)
+	public.StaticFiles(app)
 
 	// Routes
 	app.GET("/", handler.Home)
