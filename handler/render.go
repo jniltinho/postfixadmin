@@ -16,8 +16,8 @@ var GetRoutes = map[string]string{
 	"LogoutUrl": "/adm/logout",
 }
 
-func Render2(c echo.Context, t templ.Component) error {
-	return t.Render(c.Request().Context(), c.Response())
+func Render(c echo.Context, t templ.Component) error {
+	return t.Render(c.Request().Context(), c.Response().Writer)
 }
 
 func hxRedirect(c echo.Context, to string) error {
@@ -31,7 +31,7 @@ func hxRedirect(c echo.Context, to string) error {
 }
 
 // This custom Render replaces Echo's echo.Context.Render() with templ's templ.Component.Render().
-func Render(ctx echo.Context, statusCode int, t templ.Component) error {
+func Render2(ctx echo.Context, statusCode int, t templ.Component) error {
 	ctx.Response().Writer.WriteHeader(statusCode)
 	ctx.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTML)
 	return t.Render(ctx.Request().Context(), ctx.Response().Writer)

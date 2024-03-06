@@ -38,8 +38,6 @@ func (r *AppConfig) AppRun() {
 	// Echo instance
 	//r.Echo.Logger.SetLevel(log.INFO)
 
-	//internal.TesteInternal(r.Config, "criarenet.com")
-
 	//Routes
 	r.runRoutes()
 

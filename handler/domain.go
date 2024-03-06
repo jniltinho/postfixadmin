@@ -3,7 +3,7 @@ package handler
 //https://blog.benoitblanchon.fr/django-htmx-messages-framework/
 
 import (
-	"net/http"
+	"strings"
 
 	"postfixadmin/model"
 	"postfixadmin/view"
@@ -25,11 +25,11 @@ type DomainRequest struct {
 func ListDomain(c echo.Context) error {
 	d := new(model.Domain)
 	allDomains := d.ListDomains()
-	return Render(c, http.StatusOK, view.ListDomain(allDomains))
+	return Render(c, view.ListDomain(allDomains))
 }
 
 func FormNewDomain(c echo.Context) error {
-	return Render(c, http.StatusOK, view.AddDomain())
+	return Render(c, view.AddDomain())
 }
 
 func NewDomain(c echo.Context) error {
@@ -39,10 +39,10 @@ func NewDomain(c echo.Context) error {
 
 	if err := c.Bind(dR); err != nil {
 		message := view.Messages{Message: "Failed to bind the data", Alert: "error"}
-		return Render(c, http.StatusOK, view.DomainForm(message))
+		return Render(c, view.DomainForm(message))
 	}
 
-	domain.Domain = dR.Domain
+	domain.Domain = strings.ToLower(dR.Domain)
 	domain.Description = dR.Description
 	domain.Aliases = dR.Aliases
 	domain.Mailboxes = dR.Mailboxes
@@ -58,13 +58,13 @@ func NewDomain(c echo.Context) error {
 	res := domain.CreateDomain()
 	if res != nil {
 		message := view.Messages{Message: res.Error(), Alert: "error"}
-		return Render(c, http.StatusOK, view.DomainForm(message))
+		return Render(c, view.DomainForm(message))
 	}
 
 	m := FF("Domain Created: %s", domain.Domain)
 	message := view.Messages{Message: m, Alert: "success"}
 
-	return Render(c, http.StatusOK, view.DomainForm(message))
+	return Render(c, view.DomainForm(message))
 }
 
 func DeleteDomain(c echo.Context) error {
@@ -75,12 +75,12 @@ func DeleteDomain(c echo.Context) error {
 	if res != nil {
 		message := view.Messages{Message: res.Error(), Alert: "error"}
 		list := domain.ListDomains()
-		return Render(c, http.StatusOK, view.ListDomainTable(list, message))
+		return Render(c, view.ListDomainTable(list, message))
 	}
 
 	m := FF("Domain Deleted: %s", domain.Domain)
 	message := view.Messages{Message: m, Alert: "warning"}
 
 	list := domain.ListDomains()
-	return Render(c, http.StatusOK, view.ListDomainTable(list, message))
+	return Render(c, view.ListDomainTable(list, message))
 }
