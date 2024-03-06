@@ -1,16 +1,21 @@
-package handler
+package domain
 
 //https://blog.benoitblanchon.fr/django-htmx-messages-framework/
 
 import (
+	"fmt"
 	"strings"
 
+	"postfixadmin/handler"
 	"postfixadmin/model"
+	"postfixadmin/util"
 	"postfixadmin/view"
 	"time"
 
 	"github.com/labstack/echo/v4"
 )
+
+var FF = fmt.Sprintf
 
 type DomainRequest struct {
 	Domain         string `json:"domain" form:"domain"`
@@ -25,11 +30,11 @@ type DomainRequest struct {
 func ListDomain(c echo.Context) error {
 	d := new(model.Domain)
 	allDomains := d.ListDomains()
-	return Render(c, view.ListDomain(allDomains))
+	return handler.Render(c, view.ListDomain(allDomains))
 }
 
 func FormNewDomain(c echo.Context) error {
-	return Render(c, view.AddDomain())
+	return handler.Render(c, view.AddDomain())
 }
 
 func NewDomain(c echo.Context) error {
@@ -39,7 +44,7 @@ func NewDomain(c echo.Context) error {
 
 	if err := c.Bind(dR); err != nil {
 		message := view.Messages{Message: "Failed to bind the data", Alert: "error"}
-		return Render(c, view.DomainForm(message))
+		return handler.Render(c, view.DomainForm(message))
 	}
 
 	domain.Domain = strings.ToLower(dR.Domain)
@@ -58,13 +63,13 @@ func NewDomain(c echo.Context) error {
 	res := domain.CreateDomain()
 	if res != nil {
 		message := view.Messages{Message: res.Error(), Alert: "error"}
-		return Render(c, view.DomainForm(message))
+		return handler.Render(c, view.DomainForm(message))
 	}
 
 	m := FF("Domain Created: %s", domain.Domain)
 	message := view.Messages{Message: m, Alert: "success"}
 
-	return Render(c, view.DomainForm(message))
+	return handler.Render(c, view.DomainForm(message))
 }
 
 func DeleteDomain(c echo.Context) error {
@@ -75,12 +80,20 @@ func DeleteDomain(c echo.Context) error {
 	if res != nil {
 		message := view.Messages{Message: res.Error(), Alert: "error"}
 		list := domain.ListDomains()
-		return Render(c, view.ListDomainTable(list, message))
+		return handler.Render(c, view.ListDomainTable(list, message))
 	}
 
 	m := FF("Domain Deleted: %s", domain.Domain)
 	message := view.Messages{Message: m, Alert: "warning"}
 
 	list := domain.ListDomains()
-	return Render(c, view.ListDomainTable(list, message))
+	return handler.Render(c, view.ListDomainTable(list, message))
+}
+
+func EditDomain(c echo.Context) error {
+	d := new(model.Domain)
+	domainDecode := util.URLDecode(c.Param("domain"))
+	d.Domain = domainDecode
+	domain, _ := d.GetDomain()
+	return handler.Render(c, view.EditDomain(domain))
 }

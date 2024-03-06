@@ -2081,9 +2081,9 @@ html {
   padding: 0px;
 }
 
-[type="checkbox"].checkbox-md {
-  height: 1.5rem;
-  width: 1.5rem;
+[type="checkbox"].checkbox-xs {
+  height: 1rem;
+  width: 1rem;
 }
 
 .input-md {
@@ -2457,6 +2457,11 @@ html {
   line-height: 1.75rem;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -2468,6 +2473,10 @@ html {
 
 .font-bold {
   font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
 }
 
 .leading-tight {

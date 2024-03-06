@@ -2,6 +2,7 @@ package app
 
 import (
 	"postfixadmin/handler"
+	"postfixadmin/handler/domain"
 	web "postfixadmin/public"
 
 	"github.com/gorilla/sessions"
@@ -26,12 +27,12 @@ func (r *AppConfig) runRoutes() {
 	app.GET("/", handler.Home)
 	app.GET("/home", handler.Home)
 
-	app.GET("/ListDomain", handler.ListDomain)
-	app.GET("/AddDomain", handler.FormNewDomain)
-	app.POST("/AddDomain", handler.NewDomain)
-	app.DELETE("/DelDomain/:domain", handler.DeleteDomain)
-	//app.GET("/login", handlers.LoginOld)
-	//app.GET("/logout", handlers.LogoutUser)
+	// Domain routes
+	app.GET("/ListDomain", domain.ListDomain)
+	app.GET("/AddDomain", domain.FormNewDomain)
+	app.POST("/AddDomain", domain.NewDomain)
+	app.DELETE("/DelDomain/:domain", domain.DeleteDomain)
+	app.GET("/EditDomain/:domain", domain.EditDomain)
 
 	adm := app.Group("/adm")
 	adm.GET("/login", handler.Login)

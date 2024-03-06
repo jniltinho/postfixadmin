@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"postfixadmin/config"
+	"postfixadmin/util"
 	"time"
 )
 
@@ -21,6 +22,7 @@ type Domain struct {
 	Modified       time.Time `gorm:"column:modified" json:"modified"`
 	Active         bool      `gorm:"column:active" json:"active"`
 	PasswordExpiry int       `gorm:"column:password_expiry" json:"password_expiry"`
+	DomainEncode   string    `gorm:"-"`
 }
 
 // TableName get sql table name.获取数据库表名
@@ -39,11 +41,17 @@ func (m *Domain) CreateDomain() error {
 func (m *Domain) ListDomains() []Domain {
 	var domains []Domain
 	config.DB().Where("domain != ?", "ALL").Order("domain").Find(&domains)
+
+	for i, domain := range domains {
+		domains[i].DomainEncode = util.URLEncode(domain.Domain)
+	}
 	return domains
 }
 
-func (m *Domain) GetDomain(domain string) error {
-	return config.DB().Where("domain = ?", domain).First(m).Error
+func (m *Domain) GetDomain() (Domain, error) {
+	err := config.DB().Where("domain = ?", m.Domain).First(m).Error
+	m.DomainEncode = util.URLEncode(m.Domain)
+	return *m, err
 }
 
 func (m *Domain) DeleteDomain(domain string) error {

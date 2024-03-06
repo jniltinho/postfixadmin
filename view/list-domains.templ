@@ -52,7 +52,7 @@ templ ListDomainTable(domains []model.Domain, m Messages) {
 					<td>{ d.Modified.Format("2006-01-02") }</td>
 					<td>{ FF("%d", d.PasswordExpiry) }</td>
 					<td>
-						<a class="btn btn-outline hover:bg-blue-700 btn-sm" href={ templ.URL(FF("/EditDomain/%s", d.Domain)) }>Edit</a>
+						<a class="btn btn-outline hover:bg-blue-700 btn-sm" href={ templ.URL(FF("/EditDomain/%s", d.DomainEncode)) }>Edit</a>
 					</td>
 					<td hx-target="Are you sure you would like to delete the domain?">
 						<button class="btn btn-outline bg-red-400 hover:bg-red-700 btn-sm" hx-confirm="Do you really want to delete?" hx-target="#list-domain" hx-swap="outerHTML" hx-delete={ "/DelDomain/" + d.Domain }>
