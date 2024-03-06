@@ -48,10 +48,10 @@ func (m *Domain) ListDomains() []Domain {
 	return domains
 }
 
-func (m *Domain) GetDomain() (Domain, error) {
+func (m *Domain) GetDomain() error {
 	err := config.DB().Where("domain = ?", m.Domain).First(m).Error
 	m.DomainEncode = util.URLEncode(m.Domain)
-	return *m, err
+	return err
 }
 
 func (m *Domain) DeleteDomain(domain string) error {
@@ -59,13 +59,16 @@ func (m *Domain) DeleteDomain(domain string) error {
 }
 
 func (m *Domain) DisableDomain() int64 {
-	return config.DB().Model(m).Where("domain = ?", m.Domain).Update("active", 0).RowsAffected
+	return config.DB().Model(m).Update("active", 0).RowsAffected
 }
 
 func (m *Domain) EnableDomain() int64 {
-	return config.DB().Model(m).Where("domain = ?", m.Domain).Update("active", 1).RowsAffected
+	return config.DB().Model(m).Update("active", 1).RowsAffected
 }
 
 func (m *Domain) UpdateDomain() error {
-	return config.DB().Where("domain = ?", m.Domain).Updates(m).Error
+	if !m.Active {
+		return config.DB().Updates(m).Update("active", m.Active).Error
+	}
+	return config.DB().Updates(m).Error
 }

@@ -20,6 +20,7 @@ host = "127.0.0.1:3306"
 dbname = "postfixadmin"
 max_idle_conns = 2
 max_open_conns = 16
+log_level = "info"
 
 [redis]
 host = "127.0.0.1:6350"

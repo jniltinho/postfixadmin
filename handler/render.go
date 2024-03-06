@@ -20,7 +20,7 @@ func Render(c echo.Context, t templ.Component) error {
 	return t.Render(c.Request().Context(), c.Response().Writer)
 }
 
-func hxRedirect(c echo.Context, to string) error {
+func Redirect(c echo.Context, to string) error {
 	if len(c.Request().Header.Get("HX-Request")) > 0 {
 		c.Response().Header().Set("HX-Redirect", to)
 		c.Response().WriteHeader(http.StatusSeeOther)

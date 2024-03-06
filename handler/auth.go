@@ -30,7 +30,7 @@ func LoginUser(c echo.Context) error {
 	if !ok {
 		log.INFO("Failed to authenticate user: %s", userData.Username)
 		//return c.Redirect(http.StatusUnauthorized, "/adm/login")
-		return hxRedirect(c, GetRoutes["LoginUrl"])
+		return Redirect(c, GetRoutes["LoginUrl"])
 	}
 
 	sessionToken := uuid.NewString()
@@ -51,7 +51,7 @@ func LoginUser(c echo.Context) error {
 	sess.Values["authenticated"] = true
 	sess.Save(c.Request(), c.Response())
 	//return c.Redirect(http.StatusSeeOther, "/")
-	return hxRedirect(c, "/")
+	return Redirect(c, "/")
 }
 
 func LogoutUser(c echo.Context) error {
@@ -68,7 +68,7 @@ func LogoutUser(c echo.Context) error {
 	sess.Values["session_token"] = nil
 
 	sess.Save(c.Request(), c.Response())
-	return hxRedirect(c, GetRoutes["LoginUrl"])
+	return Redirect(c, GetRoutes["LoginUrl"])
 }
 
 func checkLogin(login, password string) bool {

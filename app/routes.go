@@ -17,7 +17,7 @@ func (r *AppConfig) runRoutes() {
 	app.Use(middleware.Logger())
 	app.Use(middleware.Recover())
 	//app.Use(handlers.WithAuth)
-	app.Use(handler.CheckSession)
+	//app.Use(handler.CheckSession)
 	app.Use(middleware.Recover())
 
 	// Static files
@@ -33,6 +33,7 @@ func (r *AppConfig) runRoutes() {
 	app.POST("/AddDomain", domain.NewDomain)
 	app.DELETE("/DelDomain/:domain", domain.DeleteDomain)
 	app.GET("/EditDomain/:domain", domain.EditDomain)
+	app.POST("/UpdateDomain", domain.UpdateDomain)
 
 	adm := app.Group("/adm")
 	adm.GET("/login", handler.Login)

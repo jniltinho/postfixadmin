@@ -3,7 +3,7 @@ package view
 import "postfixadmin/view/layout"
 import "postfixadmin/model"
 
-templ EditDomain(domain model.Domain) {
+templ EditDomain(domain *model.Domain) {
 	@layout.BASE() {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
 			<div class="border border-slate-600 py-6 px-3 shadow shadow-current">
@@ -13,87 +13,95 @@ templ EditDomain(domain model.Domain) {
 	}
 }
 
-templ EditDomainForm(d model.Domain, m Messages) {
-	<form hx-post="/EditDomain" hx-swap="outerHTML">
-		<div class="text-center text-xl font-black mt-2"><h4>Edit domain</h4></div>
-		<div class="flex flex-col space-y-2">
-			<div>
-				<label>Domain</label>
+templ EditDomainForm(d *model.Domain, m Messages) {
+	<div id="editD">
+		<form hx-post="/UpdateDomain" hx-swap="afterend" hx-target="#editD">
+			<div class="text-center text-xl font-black mt-2"><h4>Edit domain</h4></div>
+			<div class="flex flex-col space-y-2">
 				<div>
-					<input class="w-full px-0 input-sm font-semibold text-xl" required type="text" name="domain" value={ d.Domain } disabled/>
+					<label>Domain</label>
+					<div>
+						<input type="hidden" name="domain_encode" value={ d.DomainEncode }/>
+						<input class="w-full px-0 input-sm font-semibold text-xl" required type="text" name="domain" value={ d.Domain } readonly="readonly"/>
+					</div>
 				</div>
-			</div>
-			<div>
-				<label>Description</label>
 				<div>
-					<input class="border border-slate-600 w-full leading-tight input-sm" autocomplete="off" required type="text" name="description" value={ d.Description }/>
+					<label>Description</label>
+					<div>
+						<input class="border border-slate-600 w-full leading-tight input-sm" autocomplete="off" required type="text" name="description" value={ d.Description }/>
+					</div>
+				</div>
+				<div>
+					<label>Aliases</label>
+					<div class="-space-y-2">
+						<input class="border border-slate-600 w-full leading-tight input-sm" required type="number" pattern="\\d+" name="aliases" value={ FF("%d", d.Aliases) }/>
+						<div class="label px-0">
+							<span class="label-text-alt">-1 = disable | 0 = unlimited</span>
+						</div>
+					</div>
+				</div>
+				<div>
+					<label>Mailboxes</label>
+					<div class="-space-y-2">
+						<input class="border border-slate-600 w-full leading-tight input-sm" type="number" pattern="\\d+" name="mailboxes" value={ FF("%d", d.Mailboxes) }/>
+						<div class="label px-0">
+							<span class="label-text-alt">-1 = disable | 0 = unlimited</span>
+						</div>
+					</div>
+				</div>
+				<div class="flex justify-evenly gap-3 text-sm">
+					<div class="flex items-start gap-1">
+						<label>Mail server is backup MX</label>
+						<div>
+							<div>
+								<label>
+									if d.Backupmx {
+										<input type="checkbox" value="1" name="backupmx" checked="checked" class="checkbox checkbox-xs"/>
+									} else {
+										<input type="checkbox" value="1" name="backupmx" class="checkbox checkbox-xs"/>
+									}
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="flex items-start gap-1">
+						<label>Active</label>
+						<div>
+							<div>
+								<label>
+									if d.Active {
+										<input type="checkbox" value="1" name="active" checked="checked" class="checkbox checkbox-xs"/>
+									} else {
+										<input type="checkbox" value="1" name="active" class="checkbox checkbox-xs"/>
+									}
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="flex items-start gap-1">
+						<label>Add default mail aliases</label>
+						<div>
+							<div>
+								<label>
+									<input type="checkbox" value="1" name="default_aliases" checked="checked" class="checkbox checkbox-xs"/>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="py-3">
+					<label>Pass expires</label>
+					<div class="-space-y-2">
+						<input class="border border-slate-600 w-full leading-tight input-sm" type="number" pattern="\\d+" name="password_expiry" value={ FF("%d", d.PasswordExpiry) }/>
+						<div class="label px-0">
+							<span class="label-text-alt space-y-4">Date when password will expire</span>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div>
-				<label>Aliases</label>
-				<div class="-space-y-2">
-					<input class="border border-slate-600 w-full leading-tight input-sm" required type="number" pattern="\\d+" name="aliases" value={ FF("%d", d.Aliases) }/>
-					<div class="label px-0">
-						<span class="label-text-alt">-1 = disable | 0 = unlimited</span>
-					</div>
-				</div>
+				<input class="btn btn-outline hover:bg-blue-700 w-full mb-2" type="submit" name="submit" value="Save changes"/>
 			</div>
-			<div>
-				<label>Mailboxes</label>
-				<div class="-space-y-2">
-					<input class="border border-slate-600 w-full leading-tight input-sm" type="number" pattern="\\d+" name="mailboxes" value="10"/>
-					<div class="label px-0">
-						<span class="label-text-alt">-1 = disable | 0 = unlimited</span>
-					</div>
-				</div>
-			</div>
-			<div class="flex justify-evenly gap-3 text-sm">
-				<div class="flex items-start gap-1">
-					<label>Mail server is backup MX</label>
-					<div>
-						<div>
-							<label>
-								<input type="checkbox" value="1" name="backupmx" class="checkbox checkbox-xs"/>
-							</label>
-						</div>
-					</div>
-				</div>
-				<div class="flex items-start gap-1">
-					<label>Active</label>
-					<div>
-						<div>
-							<label>
-								<input type="checkbox" value="1" name="active" checked="checked" class="checkbox checkbox-xs"/>
-							</label>
-						</div>
-					</div>
-				</div>
-				<div class="flex items-start gap-1">
-					<label>Add default mail aliases</label>
-					<div>
-						<div>
-							<label>
-								<input type="checkbox" value="1" name="default_aliases" checked="checked" class="checkbox checkbox-xs"/>
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="py-3">
-				<label>Pass expires</label>
-				<div class="-space-y-2">
-					<input class="border border-slate-600 w-full leading-tight input-sm" type="number" pattern="\\d+" name="password_expiry" value="365"/>
-					<div class="label px-0">
-						<span class="label-text-alt space-y-4">Date when password will expire</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div>
-			<input class="btn btn-outline hover:bg-blue-700 w-full mb-2" type="submit" name="submit" value="Save changes"/>
-			if m.Alert != "" {
-				@ToastMessages(m)
-			}
-		</div>
-	</form>
+		</form>
+	</div>
 }

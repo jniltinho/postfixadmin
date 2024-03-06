@@ -35,7 +35,7 @@ func (config *DBInstance) dbInit() any {
 	maxOpenConns := conf.GetInt("mysql.max_open_conns")
 
 	lv := logger.Error
-	if conf.GetString("log.log_level") == "debug" {
+	if conf.GetString("mysql.log_level") == "debug" {
 		lv = logger.Info
 	}
 

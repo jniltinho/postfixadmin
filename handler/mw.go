@@ -29,7 +29,7 @@ func CheckSession(next echo.HandlerFunc) echo.HandlerFunc {
 		sess, _ := session.Get("session", c)
 		if auth, ok := sess.Values["authenticated"].(bool); !ok || !auth {
 			//return c.Redirect(http.StatusSeeOther, GetRoutes["LoginUrl"])
-			return hxRedirect(c, GetRoutes["LoginUrl"])
+			return Redirect(c, GetRoutes["LoginUrl"])
 		}
 
 		log.INFO("User: %s is Authenticated Token: %s", sess.Values["username"], sess.Values["session_token"])

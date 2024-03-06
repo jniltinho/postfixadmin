@@ -25,12 +25,16 @@ type DomainRequest struct {
 	Active         bool   `json:"active" form:"active"`
 	PasswordExpiry int    `json:"password_expiry" form:"password_expiry"`
 	Backupmx       bool   `json:"backupmx" form:"backupmx"`
+	DomainEncode   string `json:"domain_encode" form:"domain_encode"`
 }
 
 func ListDomain(c echo.Context) error {
 	d := new(model.Domain)
-	allDomains := d.ListDomains()
-	return handler.Render(c, view.ListDomain(allDomains))
+	js := `{"messages":[{"message":"It works!","tags":"success"}]}`
+
+	c.Response().Header().Set("HX-Trigger", string(js))
+
+	return handler.Render(c, view.ListDomain(d.ListDomains()))
 }
 
 func FormNewDomain(c echo.Context) error {
@@ -44,7 +48,7 @@ func NewDomain(c echo.Context) error {
 
 	if err := c.Bind(dR); err != nil {
 		message := view.Messages{Message: "Failed to bind the data", Alert: "error"}
-		return handler.Render(c, view.DomainForm(message))
+		return handler.Render(c, view.FlashMessage(message))
 	}
 
 	domain.Domain = strings.ToLower(dR.Domain)
@@ -63,13 +67,13 @@ func NewDomain(c echo.Context) error {
 	res := domain.CreateDomain()
 	if res != nil {
 		message := view.Messages{Message: res.Error(), Alert: "error"}
-		return handler.Render(c, view.DomainForm(message))
+		return handler.Render(c, view.FlashMessage(message))
 	}
 
 	m := FF("Domain Created: %s", domain.Domain)
-	message := view.Messages{Message: m, Alert: "success"}
+	message := view.Messages{Message: m, Alert: "success", ResetForm: true}
 
-	return handler.Render(c, view.DomainForm(message))
+	return handler.Render(c, view.FlashMessage(message))
 }
 
 func DeleteDomain(c echo.Context) error {
@@ -94,6 +98,46 @@ func EditDomain(c echo.Context) error {
 	d := new(model.Domain)
 	domainDecode := util.URLDecode(c.Param("domain"))
 	d.Domain = domainDecode
-	domain, _ := d.GetDomain()
-	return handler.Render(c, view.EditDomain(domain))
+	d.GetDomain()
+	return handler.Render(c, view.EditDomain(d))
+}
+
+func UpdateDomain(c echo.Context) error {
+
+	dR := new(DomainRequest)
+	domain := new(model.Domain)
+
+	if err := c.Bind(dR); err != nil {
+		//fmt.Println("Failed to bind the data", err.Error())
+		res := FF("Failed Update: %s, Error: %s", domain.Domain, err.Error())
+		message := view.Messages{Message: res, Alert: "error"}
+		return handler.Render(c, view.FlashMessage(message))
+	}
+
+	if dR.DomainEncode != "" {
+		dR.Domain = util.URLDecode(dR.DomainEncode)
+	}
+
+	domain.Domain = strings.ToLower(dR.Domain)
+	domain.Description = dR.Description
+	domain.Aliases = dR.Aliases
+	domain.Mailboxes = dR.Mailboxes
+	domain.Maxquota = 10
+	domain.Quota = 2048
+	domain.Transport = "virtual"
+	domain.Backupmx = dR.Backupmx
+	domain.PasswordExpiry = dR.PasswordExpiry
+	domain.Modified = time.Now()
+	domain.Active = dR.Active
+
+	res := domain.UpdateDomain()
+	if res != nil {
+		//message := view.Messages{Message: res.Error(), Alert: "error"}
+		return handler.Redirect(c, "/ListDomain")
+	}
+
+	m := FF("Domain Update: %s", domain.Domain)
+	message := view.Messages{Message: m, Alert: "success", Redirect: "/ListDomain"}
+
+	return handler.Render(c, view.FlashMessage(message))
 }

@@ -9,7 +9,7 @@ var FF = fmt.Sprintf
 templ ListDomain(domains []model.Domain) {
 	@layout.BASE() {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
-			<div class="border border-slate-600 shadow shadow-current">
+			<div id="mainL" class="border border-slate-600 shadow shadow-current">
 				@ListDomainTable(domains, Messages{})
 			</div>
 		</div>
@@ -64,7 +64,7 @@ templ ListDomainTable(domains []model.Domain, m Messages) {
 		</table>
 		<div class=""><a href="/AddDomain" class="border-none btn btn-outline hover:bg-blue-700 w-full">Add New Domain</a></div>
 		if m.Alert != "" {
-			@ToastMessages(m)
+			@FlashMessage(m)
 		}
 	</div>
 }

@@ -14,7 +14,7 @@ templ AddDomain() {
 
 //<div class="flex flex-col space-y-2 py-2 px-4">
 templ DomainForm(m Messages) {
-	<form hx-post="/AddDomain" hx-swap="outerHTML">
+	<form id="formId" hx-post="/AddDomain" hx-swap="afterend">
 		<div class="text-center text-xl font-black mt-2"><h4>Add a new domain</h4></div>
 		<div class="flex flex-col space-y-2">
 			<div>
@@ -91,9 +91,6 @@ templ DomainForm(m Messages) {
 		</div>
 		<div>
 			<input class="btn btn-outline hover:bg-blue-700 w-full mb-2" type="submit" name="submit" value="Add Domain"/>
-			if m.Alert != "" {
-				@ToastMessages(m)
-			}
 		</div>
 	</form>
 }

@@ -1,8 +1,10 @@
 package view
 
 type Messages struct {
-	Alert   string
-	Message string
+	Alert     string
+	Message   string
+	Redirect  string
+	ResetForm bool
 }
 
 var alert = map[string]string{
@@ -12,19 +14,30 @@ var alert = map[string]string{
 	"warning": "alert alert-warning",
 }
 
-templ ToastMessages(m Messages) {
-	<div id="malert" class="toast z-40">
+templ FlashMessage(m Messages) {
+	<div id="alertM" class="toast z-40">
 		<div class={ alert[m.Alert] }>
 			<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 			<span>{ m.Message }</span>
 		</div>
 	</div>
-	@CallbackScript()
+	@delay(6000)
+	if m.Redirect != "" {
+		@redirUrl(m.Redirect, 6000)
+	}
+	if m.ResetForm {
+		@resetForm("#formId")
+	}
 }
 
-//<script>$('#malert').delay(8000).fadeOut('slow');</script>
-templ CallbackScript() {
-	<script>
-	$('#malert').delay(8000).fadeOut('slow');
-	</script>
+script delay(delayTime int) {
+	$('#alertM').delay(delayTime).fadeOut('slow');
+}
+
+script redirUrl(url string, delayTime int) {
+	setTimeout(function() {window.location.href = url;}, delayTime);
+}
+
+script resetForm(id string) {
+	$(id).trigger("reset");
 }
