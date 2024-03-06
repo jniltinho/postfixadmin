@@ -45,9 +45,9 @@ templ ListDomainTable(domains []model.Domain, m Messages) {
 						<td>NO</td>
 					}
 					if d.Active {
-						<td><a class="btn btn-outline bg-green-500 hover:bg-green-700 btn-sm" href="#">YES</a></td>
+						<td><a class="btn btn-outline bg-green-500 hover:bg-green-700 btn-sm" hx-get={ FF("/ActDomain/%s/0", d.DomainEncode) }>YES</a></td>
 					} else {
-						<td><a class="btn btn-outline bg-red-500 hover:bg-red-700 btn-sm" href="#">NO</a></td>
+						<td><a class="btn btn-outline bg-red-500 hover:bg-red-700 btn-sm" hx-get={ FF("/ActDomain/%s/1", d.DomainEncode) }>NO</a></td>
 					}
 					<td>{ d.Modified.Format("2006-01-02") }</td>
 					<td>{ FF("%d", d.PasswordExpiry) }</td>

@@ -30,10 +30,6 @@ type DomainRequest struct {
 
 func ListDomain(c echo.Context) error {
 	d := new(model.Domain)
-	js := `{"messages":[{"message":"It works!","tags":"success"}]}`
-
-	c.Response().Header().Set("HX-Trigger", string(js))
-
 	return handler.Render(c, view.ListDomain(d.ListDomains()))
 }
 
@@ -140,4 +136,15 @@ func UpdateDomain(c echo.Context) error {
 	message := view.Messages{Message: m, Alert: "success", Redirect: "/ListDomain"}
 
 	return handler.Render(c, view.FlashMessage(message))
+}
+
+func ActDomain(c echo.Context) error {
+	domain := new(model.Domain)
+	domain.Domain = util.URLDecode(c.Param("domain"))
+	if c.Param("active") == "1" {
+		domain.EnableDomain()
+	} else {
+		domain.DisableDomain()
+	}
+	return handler.Redirect(c, "/ListDomain")
 }
