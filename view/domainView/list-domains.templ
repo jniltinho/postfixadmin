@@ -1,0 +1,88 @@
+package domainView
+
+import "postfixadmin/view/layout"
+import "postfixadmin/model"
+import "fmt"
+
+var FF = fmt.Sprintf
+
+templ ListDomain(domains []model.Domain) {
+	@layout.BASE() {
+		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
+			<div id="mainL" class="border border-slate-600 shadow shadow-current">
+				@ListDomainTable(domains, Messages{})
+			</div>
+		</div>
+	}
+}
+
+templ ListDomainTable(domains []model.Domain, m Messages) {
+	<div id="list-domain">
+		<table class="table table-sm table-zebra-zebra table-pin-rows">
+			<thead>
+				<tr class="bg-slate-200">
+					<th>Domain</th>
+					<th>Description</th>
+					<th>Aliases</th>
+					<th>Mailboxes</th>
+					<th class="flex justify-center">Last Modified</th>
+					<th>Active</th>
+					<th>BackupMX</th>
+					<th>PassExpires</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				for _, d := range domains {
+					<tr>
+						<td><a>{ d.Domain }</a></td>
+						<td>{ d.Description }</td>
+						<td><div>{ FF("%d", d.Aliases) }/100</div></td>
+						<td><div>{ FF("%d", d.Mailboxes) }/100</div></td>
+						<td class="flex justify-center">{ d.Modified.Format("2006-01-02") }</td>
+						if d.Active {
+							<td><a class="btn btn-xs btn-circle btn-success border border-slate-500" hx-get={ FF("/ActDomain/%s/0", d.DomainEncode) }>OK</a></td>
+						} else {
+							<td><a class="btn btn-xs btn-circle btn-error border border-slate-500" hx-get={ FF("/ActDomain/%s/1", d.DomainEncode) }>XX</a></td>
+						}
+						if d.Backupmx {
+							<td class="flex justify-center">YES</td>
+						} else {
+							<td class="flex justify-center">NO</td>
+						}
+						<td>{ FF("%d", d.PasswordExpiry) }</td>
+						<td>
+							<a class="btn btn-xs btn-outline hover:bg-blue-700 border border-slate-500" href={ templ.URL(FF("/EditDomain/%s", d.DomainEncode)) }>Edit</a>
+						</td>
+						<td hx-target="Are you sure you would like to delete the domain?">
+							<button class="btn btn-xs btn-error border border-slate-500" hx-confirm="Do you really want to delete?" hx-target="#list-domain" hx-swap="outerHTML" hx-delete={ "/DelDomain/" + d.DomainEncode }>
+								Del
+							</button>
+						</td>
+					</tr>
+				}
+				<tfoot>
+					<tr class="bg-slate-200">
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th><div><a href="/AddDomain" class="px-0 btn-outline hover:bg-blue-700">Add new Domain</a></div></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</tfoot>
+			</tbody>
+		</table>
+	</div>
+	if m.Alert != "" {
+		@FlashMessage(m)
+	}
+	if len(domains) >= 12 {
+		@setClassTable("#list-domain", "overflow-x-auto h-96")
+	}
+}

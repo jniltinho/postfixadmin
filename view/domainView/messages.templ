@@ -1,4 +1,4 @@
-package view
+package domainView
 
 type Messages struct {
 	Alert     string
@@ -15,23 +15,24 @@ var alert = map[string]string{
 }
 
 templ FlashMessage(m Messages) {
-	<div id="alertM" class="toast z-40">
+	<div class="toast toast-top toast-end z-40" id="toast">
 		<div class={ alert[m.Alert] }>
 			<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 			<span>{ m.Message }</span>
 		</div>
 	</div>
-	@delay(6000)
+	@closeAlert(2000)
 	if m.Redirect != "" {
-		@redirUrl(m.Redirect, 6000)
+		@redirUrl(m.Redirect, 2500)
 	}
 	if m.ResetForm {
 		@resetForm("#formId")
 	}
 }
 
-script delay(delayTime int) {
-	$('#alertM').delay(delayTime).fadeOut('slow');
+script closeAlert(delayTime int) {
+	//$('#alertM').delay(delayTime).fadeOut('fast');
+	setTimeout(function () {$('#toast').fadeOut('fast');}, delayTime);
 }
 
 script redirUrl(url string, delayTime int) {
@@ -40,6 +41,10 @@ script redirUrl(url string, delayTime int) {
 
 script resetForm(id string) {
 	$(id).trigger("reset");
+}
+
+script setClassTable(id, className string) {
+	$(id).addClass(className);
 }
 
 //if params.Success {@ui.Toast("Username updated successfully")}
