@@ -37,6 +37,7 @@ func (r *AppConfig) AppRun() {
 	config.InitDBConnection(r.Config)
 	// Echo instance
 	//r.Echo.Logger.SetLevel(log.INFO)
+	//config.InitBun(r.Config)
 
 	//Routes
 	r.runRoutes()
