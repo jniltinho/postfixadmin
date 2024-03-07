@@ -32,6 +32,15 @@ run:
 	./$(BINARY_NAME) serve --config=local.toml
 
 
+
+build-dev:
+	CGO_ENABLED=0 $(GOBUILD) -tags=dev -o ./tmp/main .
+
+
+dev: get tailwind templ build-dev
+	./tmp/main serve --config=local.toml
+
+
 install:
 	@go install github.com/a-h/templ/cmd/templ@latest
 	@go get ./...
