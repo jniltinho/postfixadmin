@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"postfixadmin/config"
+	"postfixadmin/db"
 	"postfixadmin/log"
 	"time"
 
@@ -34,7 +34,7 @@ func NewApp(cfg *viper.Viper) *AppConfig {
 
 func (r *AppConfig) AppRun() {
 	// Initialize database connection
-	config.InitDBConnection(r.Config)
+	db.InitDBConnection(r.Config)
 	// Echo instance
 	//r.Echo.Logger.SetLevel(log.INFO)
 	//config.InitBun(r.Config)
@@ -59,7 +59,7 @@ func (r *AppConfig) AppRun() {
 	}
 
 	// Close database connections when the program terminates.
-	defer config.CloseDBConnection()
+	defer db.CloseDBConnection()
 }
 
 func (r *AppConfig) runServer() {

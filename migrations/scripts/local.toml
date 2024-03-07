@@ -1,0 +1,37 @@
+env = "local"
+
+[http]
+host = "0.0.0.0:8008"
+ssl  = false
+cert = "ssl/server.crt"
+key  = "ssl/server.key"
+
+[security.api_sign]
+app_key = 123456
+app_security = 123456
+
+[security.jwt]
+key = "VqDeRdGsLdfLjWRt5u4qA"
+
+[mysql]
+user = "postfixadmin"
+password = "Password"
+host = "127.0.0.1:3306"
+dbname = "postfixadmin"
+max_idle_conns = 2
+max_open_conns = 16
+log_level = "info"
+
+[redis]
+host = "127.0.0.1:6350"
+password = ""
+dbname = 0
+read_timeout = "0.2s"
+write_timeout = "0.2s"
+
+[log]
+log_level = "info"
+encoding = "json" #(console|json)
+log_file_name = "./tmp/server.log"
+max_backups = 30
+compress = true

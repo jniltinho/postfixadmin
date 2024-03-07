@@ -1,8 +1,9 @@
-package config
+package db
 
 import (
 	"context"
 	"database/sql"
+	"postfixadmin/config"
 	"postfixadmin/types"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -22,7 +23,7 @@ var Bun *bun.DB
 
 func createBunDB(cfg *viper.Viper) (*sql.DB, error) {
 	//ctx := context.Background()
-	DSN := GetMysqlDSN(cfg)
+	DSN := config.GetMysqlDSN(cfg)
 
 	// Open a MySQL 5.7+ database.
 	db, err := sql.Open("mysql", DSN)

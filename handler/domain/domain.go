@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 
+	"postfixadmin/db"
 	"postfixadmin/handler"
 	"postfixadmin/model"
 	"postfixadmin/util"
@@ -30,8 +31,7 @@ type DomainRequest struct {
 }
 
 func ListDomain(c echo.Context) error {
-	d := new(model.Domain)
-	return handler.Render(c, view.ListDomain(d.ListDomains()))
+	return handler.Render(c, view.ListDomain(db.ListDomains()))
 }
 
 func FormNewDomain(c echo.Context) error {
@@ -61,7 +61,7 @@ func NewDomain(c echo.Context) error {
 	domain.Modified = time.Now()
 	domain.Active = dR.Active
 
-	res := domain.CreateDomain()
+	res := db.CreateDomain(domain)
 	if res != nil {
 		message := view.Messages{Message: res.Error(), Alert: "error"}
 		return handler.Render(c, view.FlashMessage(message))
@@ -74,28 +74,25 @@ func NewDomain(c echo.Context) error {
 }
 
 func DelDomain(c echo.Context) error {
-	d := new(model.Domain)
-	d.Domain = util.URLDecode(c.Param("domain"))
+	domain := util.URLDecode(c.Param("domain"))
 
-	res := d.DeleteDomain(d.Domain)
+	res := db.DeleteDomain(domain)
 	if res != nil {
 		message := view.Messages{Message: res.Error(), Alert: "error"}
-		list := d.ListDomains()
+		list := db.ListDomains()
 		return handler.Render(c, view.ListDomainTable(list, message))
 	}
 
-	m := FF("Domain Deleted: %s", d.Domain)
+	m := FF("Domain Deleted: %s", domain)
 	message := view.Messages{Message: m, Alert: "warning"}
 
-	list := d.ListDomains()
+	list := db.ListDomains()
 	return handler.Render(c, view.ListDomainTable(list, message))
 }
 
 func EditDomain(c echo.Context) error {
-	d := new(model.Domain)
-	d.Domain = util.URLDecode(c.Param("domain"))
-	d.GetDomain()
-	return handler.Render(c, view.EditDomain(d))
+	domain, _ := db.GetDomain(util.URLDecode(c.Param("domain")))
+	return handler.Render(c, view.EditDomain(&domain))
 }
 
 func PostEditDomain(c echo.Context) error {
@@ -126,7 +123,7 @@ func PostEditDomain(c echo.Context) error {
 	domain.Modified = time.Now()
 	domain.Active = dR.Active
 
-	res := domain.UpdateDomain()
+	res := db.UpdateDomain(domain)
 	if res != nil {
 		//message := view.Messages{Message: res.Error(), Alert: "error"}
 		return handler.Redirect(c, "/ListDomain")
@@ -143,7 +140,7 @@ func ActDomain(c echo.Context) error {
 	domain.Domain = util.URLDecode(c.Param("domain"))
 	if c.Param("active") == "1" || c.Param("active") == "0" {
 		active, _ := strconv.Atoi(c.Param("active"))
-		domain.ActiveDomain(active)
+		db.ActiveDomain(domain, active)
 	}
 	return handler.Redirect(c, "/ListDomain")
 }

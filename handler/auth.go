@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"postfixadmin/config"
+	"postfixadmin/db"
 	"postfixadmin/log"
 	"postfixadmin/model"
 
@@ -73,7 +73,7 @@ func LogoutUser(c echo.Context) error {
 
 func checkLogin(login, password string) bool {
 	var user model.Admin
-	res := config.DB().Select("password").First(&user, "username = ? AND active = 1", login)
+	res := db.DB().Select("password").First(&user, "username = ? AND active = 1", login)
 
 	if res.RowsAffected == 0 {
 		return false

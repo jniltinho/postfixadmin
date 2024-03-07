@@ -1,7 +1,9 @@
-package config
+package db
 
 import (
+	"postfixadmin/config"
 	"postfixadmin/log"
+	"postfixadmin/migrations"
 	"sync"
 	"time"
 
@@ -27,9 +29,9 @@ func (i *DBInstance) Instance() any {
 	return i.instance
 }
 
-func (config *DBInstance) dbInit() any {
-	conf := config.Conf
-	DSN := GetMysqlDSN(conf)
+func (i *DBInstance) dbInit() any {
+	conf := i.Conf
+	DSN := config.GetMysqlDSN(conf)
 
 	maxIdleConns := conf.GetInt("mysql.max_idle_conns")
 	maxOpenConns := conf.GetInt("mysql.max_open_conns")
@@ -64,11 +66,11 @@ func CloseDBConnection() {
 	sql.Close()
 }
 
-func InitDBConnection(conf *viper.Viper) {
-	config := &DBInstance{Conf: conf}
-	dbInstance = &DBInstance{initializer: config.dbInit}
+func InitDBConnection(v *viper.Viper) {
+	cfg := &DBInstance{Conf: v}
+	dbInstance = &DBInstance{initializer: cfg.dbInit}
 	log.INFO("Database Initializer")
 
 	// Create Default Tables if not exists
-	CreateSchema()
+	migrations.InitMigrations(DB())
 }
