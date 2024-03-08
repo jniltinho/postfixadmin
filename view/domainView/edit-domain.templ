@@ -1,19 +1,20 @@
 package domainView
 
 import "postfixadmin/view/layout"
+import "postfixadmin/view/ui"
 import "postfixadmin/model"
 
 templ EditDomain(domain *model.Domain) {
 	@layout.BASE() {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
 			<div class="border border-slate-600 py-6 px-3 shadow shadow-current">
-				@EditDomainForm(domain, Messages{})
+				@EditDomainForm(domain, ui.Messages{})
 			</div>
 		</div>
 	}
 }
 
-templ EditDomainForm(d *model.Domain, m Messages) {
+templ EditDomainForm(d *model.Domain, m ui.Messages) {
 	<div id="editD">
 		<form hx-post="/PostEditDomain" hx-swap="afterend" hx-target="#editD">
 			<div class="text-center text-xl font-black mt-2"><h4>Edit domain</h4></div>

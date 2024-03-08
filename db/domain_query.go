@@ -11,13 +11,21 @@ import (
 
 var FF = fmt.Sprintf
 
-func CreateDomain(m *model.Domain) error {
+func DomainNew(m *model.Domain) error {
 	err := DB().First(m, "domain = ?", m.Domain).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return DB().Create(m).Error
 	}
 	message := FF("Domain %s already exists", m.Domain)
 	return errors.New(message)
+}
+
+func DomainUpdate(m *model.Domain) error {
+	if !m.Active || !m.Backupmx {
+		param := map[string]interface{}{"active": m.Active, "backupmx": m.Backupmx}
+		return DB().Save(m).Updates(param).Error
+	}
+	return DB().Updates(m).Error
 }
 
 func ListDomains() []model.Domain {
@@ -46,12 +54,4 @@ func ActiveDomain(m *model.Domain, active int) int64 {
 	// Active and Deactive domain
 	// 1 = Active, 0 = Deactive
 	return DB().Model(m).Update("active", active).RowsAffected
-}
-
-func UpdateDomain(m *model.Domain) error {
-	if !m.Active || !m.Backupmx {
-		param := map[string]interface{}{"active": m.Active, "backupmx": m.Backupmx}
-		DB().Model(m).Updates(param)
-	}
-	return DB().Updates(m).Error
 }

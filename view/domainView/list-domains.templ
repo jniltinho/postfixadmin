@@ -1,6 +1,7 @@
 package domainView
 
 import "postfixadmin/view/layout"
+import "postfixadmin/view/ui"
 import "postfixadmin/model"
 import "fmt"
 
@@ -10,13 +11,13 @@ templ ListDomain(domains []model.Domain) {
 	@layout.BASE() {
 		<div class="flex justify-center mt-[calc(100vh-100vh+8rem)]">
 			<div id="mainL" class="border border-slate-600 shadow shadow-current">
-				@ListDomainTable(domains, Messages{})
+				@ListDomainTable(domains, ui.Messages{})
 			</div>
 		</div>
 	}
 }
 
-templ ListDomainTable(domains []model.Domain, m Messages) {
+templ ListDomainTable(domains []model.Domain, m ui.Messages) {
 	<div id="list-domain">
 		<table class="table table-sm table-zebra-zebra table-pin-rows">
 			<thead>
@@ -80,9 +81,9 @@ templ ListDomainTable(domains []model.Domain, m Messages) {
 		</table>
 	</div>
 	if m.Alert != "" {
-		@FlashMessage(m)
+		@ui.FlashMessage(m)
 	}
 	if len(domains) >= 12 {
-		@setClassTable("#list-domain", "overflow-x-auto h-96")
+		@ui.SetClassTable("#list-domain", "overflow-x-auto h-96")
 	}
 }

@@ -21,29 +21,29 @@ templ FlashMessage(m Messages) {
 			<span>{ m.Message }</span>
 		</div>
 	</div>
-	@closeAlert(2000)
+	@CloseAlert(2000)
 	if m.Redirect != "" {
-		@redirUrl(m.Redirect, 2500)
+		@RedirUrl(m.Redirect, 2500)
 	}
 	if m.ResetForm {
-		@resetForm("#formId")
+		@ResetForm("#formId")
 	}
 }
 
-script closeAlert(delayTime int) {
+script CloseAlert(delayTime int) {
 	//$('#alertM').delay(delayTime).fadeOut('fast');
 	setTimeout(function () {$('#toast').fadeOut('fast');}, delayTime);
 }
 
-script redirUrl(url string, delayTime int) {
+script RedirUrl(url string, delayTime int) {
 	setTimeout(function() {window.location.href = url;}, delayTime);
 }
 
-script resetForm(id string) {
+script ResetForm(id string) {
 	$(id).trigger("reset");
 }
 
-script setClassTable(id, className string) {
+script SetClassTable(id, className string) {
 	$(id).addClass(className);
 }
 

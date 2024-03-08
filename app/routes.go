@@ -33,7 +33,7 @@ func (r *AppConfig) runRoutes() {
 	app.POST("/NewDomain", domainHandler.NewDomain)
 	app.DELETE("/DelDomain/:domain", domainHandler.DelDomain)
 	app.GET("/EditDomain/:domain", domainHandler.EditDomain)
-	app.POST("/PostEditDomain", domainHandler.PostEditDomain)
+	app.POST("/PostEditDomain", domainHandler.UpdateDomain)
 	app.GET("/ActDomain/:domain/:active", domainHandler.ActDomain)
 
 	adm := app.Group("/adm")
