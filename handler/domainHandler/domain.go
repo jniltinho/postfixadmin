@@ -1,4 +1,4 @@
-package domain
+package domainHandler
 
 //https://blog.benoitblanchon.fr/django-htmx-messages-framework/
 
@@ -126,22 +126,32 @@ func PostEditDomain(c echo.Context) error {
 
 	res := db.UpdateDomain(domain)
 	if res != nil {
-		//message := view.Messages{Message: res.Error(), Alert: "error"}
-		return handler.Redirect(c, "/ListDomain")
+		message := domainView.Messages{Message: res.Error(), Alert: "error"}
+		return handler.Render(c, domainView.FlashMessage(message))
 	}
 
 	m := FF("Domain Update: %s", domain.Domain)
 	message := domainView.Messages{Message: m, Alert: "success", Redirect: "/ListDomain"}
-
 	return handler.Render(c, domainView.FlashMessage(message))
 }
 
 func ActDomain(c echo.Context) error {
 	domain := new(model.Domain)
+
 	domain.Domain = util.URLDecode(c.Param("domain"))
+	res := FF("Domain: %s is Activated", domain.Domain)
+
 	if c.Param("active") == "1" || c.Param("active") == "0" {
 		active, _ := strconv.Atoi(c.Param("active"))
 		db.ActiveDomain(domain, active)
 	}
-	return handler.Redirect(c, "/ListDomain")
+
+	if c.Param("active") == "0" {
+		res = FF("Domain: %s is Deactivated", domain.Domain)
+	}
+
+	message := domainView.Messages{Message: res, Alert: "warning"}
+	list := db.ListDomains()
+	return handler.Render(c, domainView.ListDomainTable(list, message))
+
 }
