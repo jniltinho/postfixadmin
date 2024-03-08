@@ -45,7 +45,7 @@ templ ListDomainTable(domains []model.Domain, m ui.Messages) {
 						if d.Active {
 							<td><a class="btn btn-xs btn-circle btn-success border border-slate-500" hx-target="#list-domain" hx-get={ FF("/ActDomain/%s/0", d.DomainEncode) }>OK</a></td>
 						} else {
-							<td><a class="btn btn-xs btn-circle btn-error border border-slate-500" hx-target="#list-domain" hx-get={ FF("/ActDomain/%s/1", d.DomainEncode) }>XX</a></td>
+							<td><a class="btn btn-warning btn-xs btn-circle border border-slate-500" hx-target="#list-domain" hx-get={ FF("/ActDomain/%s/1", d.DomainEncode) }>XX</a></td>
 						}
 						if d.Backupmx {
 							<td class="flex justify-center">YES</td>

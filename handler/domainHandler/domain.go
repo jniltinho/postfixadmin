@@ -89,6 +89,7 @@ func ActDomain(c echo.Context) error {
 
 	domain.Domain = util.URLDecode(c.Param("domain"))
 	res := FF("Domain: %s is Activated", domain.Domain)
+	alert := "success"
 
 	if c.Param("active") == "1" || c.Param("active") == "0" {
 		active, _ := strconv.Atoi(c.Param("active"))
@@ -97,8 +98,9 @@ func ActDomain(c echo.Context) error {
 
 	if c.Param("active") == "0" {
 		res = FF("Domain: %s is Deactivated", domain.Domain)
+		alert = "warning"
 	}
 
-	util := NewUtil(c, ui.Messages{Message: res, Alert: "warning"})
+	util := NewUtil(c, ui.Messages{Message: res, Alert: alert})
 	return util.domainList()
 }
